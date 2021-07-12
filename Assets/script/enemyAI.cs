@@ -41,9 +41,16 @@ public class enemyAI : MonoBehaviour
         map = GameObject.FindWithTag("map").GetComponent<PathCreator>();
         leng = map.path.localPoints.Length;
         remainTime=5;
+        nav.updateRotation = false;
     }
 
     // Update is called once per frame
+    private void LateUpdate() {
+        if (nav.velocity.sqrMagnitude > Mathf.Epsilon)
+        {
+            transform.rotation = Quaternion.LookRotation(nav.velocity.normalized);
+        }
+    }
     void Update()
     {
         if((thisbody.isKilling) && (state!=State.killing) && (state!=State.isHit)){

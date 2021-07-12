@@ -24,6 +24,7 @@ public class water2 : MonoBehaviour
                 thisp.onWater=false;
                 if(hit.transform.gameObject.CompareTag("ground"))
                     thisp.GetComponent<Rigidbody>().constraints |= RigidbodyConstraints.FreezePositionY;
+                thisp.lastPosOnGround =this.transform.position;    
             }
              // Debug.Log("hit : " + hit.collider.name);
             //Debug.Log(hit.transform.gameObject.tag);

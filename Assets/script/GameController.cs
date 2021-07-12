@@ -5,31 +5,62 @@ using TMPro;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class GameController : MonoBehaviour
 {
     
-    public GameObject map, menu, cur, pre,bonus;
+    public GameObject map, menu, cur, pre,bonus,setting;
     public int State; 
     [Header ("End game UI")]
      public GameObject end;
-    public TextMeshProUGUI gameOverText,rankText,scoreText;
+
+     public GameObject gameOver,win,lose;
+     public Image cooldown;
+    public TextMeshProUGUI rankText,scoreText;
+    private bool isCooldown = false, canRevive=true;
     
-    public void GameOver(int rank, float score) {
-        //gameOverText.gameObject.SetActive(true); 
+    public void GameOver() {
+        cur=gameOver;
+        cur.SetActive(true);
+        Time.timeScale = 0;
+        if(canRevive)
+            StartCoroutine(revive(5));
+        else
+            endGame(7);
+    }
+    private void Update() {
+        if(isCooldown){
+            cooldown.fillAmount -= (1.0f / 5.0f )*Time.unscaledDeltaTime;
+        }
+    }
+     private IEnumerator  revive(float waitTime){
+        isCooldown = true;
+        canRevive = false;
+        yield return new WaitForSecondsRealtime(waitTime);
+        endGame(7);
+        isCooldown = false;
+    }
+    public void resume(){
+        StopAllCoroutines();
+        cur.SetActive(false);
+        isCooldown = false;
+        Time.timeScale = 1;
+    }
+    public void endGame(int rank){
+        Time.timeScale = 0;
+        if(cur!=null)
+            cur.SetActive(false); 
         cur = end;
         cur.SetActive(true); 
-        if(rank>0){
-            rankText.text += rank;
-            scoreText.text += score;
+        if(rank == 1){
+            win.SetActive(true);
         }else{
-            rankText.text = "";
-            scoreText.text = "";
-            gameOverText.gameObject.SetActive(true);
+            lose.SetActive(true);
         }
-        Time.timeScale = 0;
     }
+    
     public void enterMap(){
         cur.SetActive(false);
         pre=menu;
@@ -56,5 +87,11 @@ public class GameController : MonoBehaviour
     }
     public void returnMap(){
          SceneManager.LoadScene("UItest");
+    }
+    public void onSetting(){
+        pre = menu;
+        cur=setting;
+        cur.SetActive(true);  
+        
     }
 }

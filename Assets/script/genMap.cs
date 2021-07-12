@@ -76,6 +76,7 @@ public class genMap : MonoBehaviour
         for(int i=0 ; i<5 ; i++){
             instantPos = map.path.GetPoint(0) + new Vector3(-4*(i%2*2-1)*(-1),0,(i+0.2f)*2+4);
             chrOjTmp = Instantiate (character , instantPos , Quaternion.Euler(new Vector3(0, 0, 0)) , characterTransform);
+            
         }
     }
 }

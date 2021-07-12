@@ -1082,6 +1082,7 @@ MonoBehaviour:
   cur: {fileID: 0}
   pre: {fileID: 0}
   bonus: {fileID: 0}
+  setting: {fileID: 0}
   State: 0
   end: {fileID: 7840360770127366574}
   gameOverText: {fileID: 7840360770549268203}
