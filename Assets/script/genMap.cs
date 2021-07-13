@@ -71,12 +71,13 @@ public class genMap : MonoBehaviour
     }
 
     public void genEnemy(){
+        float [][] random = {new float[]{0,0,0},new float[]{1,1,0},new float[]{1,0,1},new float[]{1,0.5f,0.5f},new float[]{0.5f,1,1}};
         GameObject chrOjTmp;
         Vector3 instantPos;
         for(int i=0 ; i<5 ; i++){
             instantPos = map.path.GetPoint(0) + new Vector3(-4*(i%2*2-1)*(-1),0,(i+0.2f)*2+4);
             chrOjTmp = Instantiate (character , instantPos , Quaternion.Euler(new Vector3(0, 0, 0)) , characterTransform);
-            
+            chrOjTmp.GetComponent<enemyAI>().prority=random[i];
         }
     }
 }

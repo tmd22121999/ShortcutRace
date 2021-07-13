@@ -332,4 +332,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scr: {fileID: 0}
   text: {fileID: 5005619236333011538}
+  buc: {fileID: 7827825315783906562}
+  mau: {fileID: 2100000, guid: acb51df9dfe43d94c8fc2fb660e48425, type: 2}
   rate: 2

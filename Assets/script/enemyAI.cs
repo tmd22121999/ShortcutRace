@@ -20,7 +20,7 @@ public class enemyAI : MonoBehaviour
     private int leng,startpoint;
     public Transform goal;
     float remainTime,p;
-    float[] prority;
+    public float[] prority;
     List<Collider> targetPick = new List<Collider>();
     public PathCreator map;
     public Animator ani;
@@ -44,7 +44,6 @@ public class enemyAI : MonoBehaviour
         nav.updateRotation = false;
     }
 
-    // Update is called once per frame
     private void LateUpdate() {
         if (nav.velocity.sqrMagnitude > Mathf.Epsilon)
         {
@@ -117,7 +116,7 @@ public class enemyAI : MonoBehaviour
             else
                 p=0;
             //Debug.Log(p);
-            prority=new float[]{thisbody.brickCount*0.2f,(22f-thisbody.brickCount)*0.04f-p,0};
+            //prority=new float[]{thisbody.brickCount*0.2f,(22f-thisbody.brickCount)*0.04f-p,0};
             float rand = Random.value;
             
 

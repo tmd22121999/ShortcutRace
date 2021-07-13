@@ -20,9 +20,13 @@ public class player : MonoBehaviour
     public GameController gameController;
     public JoystickPlayerExample pmove; 
     int layerMask = 1 << 9;
+    public Animator jump;
      [HideInInspector]
      public float oldspeed2,RemainTime,mapYPos;
      public Vector3 lastBridgePos, lastPosOnGround;
+     bool stillAlive = false;
+     RaycastHit hit;
+     
     void Start()
     {
         oldspeed2=pmove.speed;
@@ -43,7 +47,7 @@ public class player : MonoBehaviour
         }else{
             
             if(onWater==true){
-                if(Physics.BoxCast(transform.position+new Vector3(0,3,0), dat.transform.lossyScale/1.5f, new Vector3(0,-1,0), out RaycastHit hit2, transform.rotation, 6,~layerMask)){
+                if(Physics.BoxCast(transform.position+new Vector3(0,3,0), dat.transform.lossyScale/1.5f, new Vector3(0,-1,0), out RaycastHit hit2, transform.rotation, 6,~layerMask)){Debug.Log(hit2.transform.gameObject.tag);
                     if(hit2.transform.gameObject.CompareTag("water")){
                         if(brickCount>2){
                             //đặt gạch để đi trên nước
@@ -54,30 +58,18 @@ public class player : MonoBehaviour
                      }
                     else if(brickCount<3){
                     //nhay them 1 doan ngan, neu cham duong thi song ko thì thua
+                        if(!jump.enabled){
+                            jump.enabled = true;
+                            jump.SetBool("isjump", true);
+                            jump.Play("jump",0,0f);
+                            canMove(false);
+                        }
                         
-                        Vector3 direction = transform.forward;
-                        direction+=new Vector3(0,-0.4f,0);
-                        //Debug.Log(direction);
-                        Debug.DrawRay(transform.position+new Vector3(0,1,0),direction);
-                        RaycastHit hit;
-                        if (Physics.Raycast(transform.position+new Vector3(0,1,0),direction, out hit, 10)){
-                            
-                            if( (hit.transform.gameObject.CompareTag("ground")) || (hit.transform.gameObject.CompareTag("bonus"))){
-                                onWater=false;
-                                transform.position=hit.point;
-                            }else if(hit.transform.gameObject.CompareTag("water") ){
-                                Debug.Log("endgame");
-                                dead();
-                                transform.position = lastPosOnGround;
-                            } 
-                        }else{
-                            Debug.Log("endgame");
-                            dead();
-                            transform.position = lastPosOnGround;
+                           
                         }
                     }
-                } 
                 }
+                
             }
                 //destroy
             if(RemainTime<0){
@@ -93,6 +85,37 @@ public class player : MonoBehaviour
     
     }
 
+        public void aniCallback(Vector3 pos){
+            jump.SetBool("isjump", false);
+            canMove(true);
+            jump.enabled = false;
+
+            Vector3 direction = transform.forward;
+            direction+=new Vector3(0,-0.4f,0);
+            //Debug.Log(direction);
+            Debug.DrawRay(pos+new Vector3(0,1,0),direction);
+            if (Physics.Raycast(pos+new Vector3(0,1,0),direction, out hit, 10)){
+                
+                if(hit.transform.gameObject.CompareTag("water") ){
+                    Debug.Log("endgame");
+                        stillAlive = false;
+                }else {
+                    stillAlive = true;
+                } 
+            }else{
+                Debug.Log("endgame");
+                    stillAlive = false;
+            }
+            if(stillAlive){
+                onWater=false;
+                Vector3 posr = hit.point;
+                posr.y = mapYPos;
+                transform.position = posr;
+            }else{
+                transform.position = lastPosOnGround;
+                dead();
+            }
+        }
     //tang giam gacho.j,.
     public void changeBrick(int i){
         brickCount+=i;
@@ -162,6 +185,10 @@ public class player : MonoBehaviour
         pmove.speed=oldspeed2;
         isHit=false;
         
+    }
+    public virtual void canMove(bool dk){
+        if(!dk) pmove.speed = 0;
+        else pmove.speed = oldspeed2;
     }
     
     // bat tat vat ly chieu x z khi va cham vat can

@@ -10,8 +10,10 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    
-    public GameObject map, menu, cur, pre,bonus,setting;
+    public GameObject bonus;
+    [Header ("Menu UI")]
+    public GameObject map;
+    public GameObject menu, cur, pre, setting;
     public int State; 
     [Header ("End game UI")]
      public GameObject end;
@@ -20,6 +22,11 @@ public class GameController : MonoBehaviour
      public Image cooldown;
     public TextMeshProUGUI rankText,scoreText;
     private bool isCooldown = false, canRevive=true;
+    [Header ("Setting")]
+    public Image soundImg;
+    public Image vibrateImg;
+    public Sprite soundOn, soundOff, vibrateOn, vibrateOff;
+    public Animator soundToggle, vibrateToggle; 
     
     public void GameOver() {
         cur=gameOver;
@@ -93,5 +100,24 @@ public class GameController : MonoBehaviour
         cur=setting;
         cur.SetActive(true);  
         
+    }
+
+    public void onToogleSound(Toggle sound){
+        if(sound.isOn){
+            soundImg.sprite =soundOn;
+            soundToggle.Play("toggleOn");
+        }else{
+            soundImg.sprite =soundOff;
+            soundToggle.Play("toggleOff");
+        }
+    }
+    public void onToogleVibrate(Toggle vibrate){
+        if(vibrate.isOn){
+            vibrateImg.sprite =vibrateOn;
+            vibrateToggle.Play("toggleOn");
+        }else{
+            vibrateImg.sprite =vibrateOff;
+            vibrateToggle.Play("toggleOff");
+        }
     }
 }

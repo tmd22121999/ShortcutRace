@@ -55,4 +55,8 @@ public class enemy : player
         //speed=oldspeed;
         isHit=false;
     }
+       public override void canMove(bool dk){
+        if(!dk) speed = 0;
+        else speed = oldspeed;
+    }
 }

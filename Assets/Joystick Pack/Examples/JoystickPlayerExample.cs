@@ -18,8 +18,8 @@ public class JoystickPlayerExample : MonoBehaviour
             ani.SetBool("isKilling",thisplayer.isKilling);
         if(ani.GetInteger("end") != 0)
             ani.SetInteger("end",0);
-        
-        direction = Vector3.forward * FloatingJoystick.Vertical + Vector3.right * FloatingJoystick.Horizontal;
+        if(speed > 0.1f)
+            direction = Vector3.forward * FloatingJoystick.Vertical + Vector3.right * FloatingJoystick.Horizontal;
         if(direction.magnitude>0.1f){
             ani.SetBool("isrunning",true);
             direction = Vector3.Normalize(direction);
