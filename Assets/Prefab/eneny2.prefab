@@ -362,6 +362,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   brickCount: 2
   brickDefault: 2
+  maxScale: 70
   onWater: 0
   isHit: 0
   canKill: 1
@@ -397,6 +398,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fov: {fileID: 159494993551440408}
   goal: {fileID: 0}
+  prority: []
   map: {fileID: 0}
   ani: {fileID: 2060139336284606121}
 --- !u!195 &2060139337079098549
@@ -489,7 +491,7 @@ GameObject:
   - component: {fileID: 8037577737380908186}
   m_Layer: 0
   m_Name: GameObject
-  m_TagString: Untagged
+  m_TagString: other
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

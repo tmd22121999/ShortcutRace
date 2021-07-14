@@ -9,4 +9,7 @@ public class playerAni : MonoBehaviour
     public void aniCallback(){
         thisp.aniCallback(this.transform.position);
     }
+    public void afterhit(){
+        thisp.afterhit(this.transform.position);
+    }
 }

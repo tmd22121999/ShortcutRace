@@ -52,17 +52,17 @@ public class enemyAI : MonoBehaviour
     }
     void Update()
     {
-        if((thisbody.isKilling) && (state!=State.killing) && (state!=State.isHit)){
-            lastState = state;
-            state = State.killing;
-        }
+        //if((thisbody.isKilling) && (state!=State.killing) && (state!=State.isHit)){
+        //    lastState = state;
+         //   state = State.killing;
+        //}
 
         if((thisbody.isHit) && (state!=State.isHit) && (state!=State.killing)){
             lastState = state;
             state=State.isHit;
         }
         
-        //Debug.Log(state);
+        Debug.Log(state);
         
         switch(state){
             default:
@@ -158,7 +158,7 @@ public class enemyAI : MonoBehaviour
                             state = State.picking;
                             //Debug.Log("nhat do");
                         }
-                        if((target.gameObject.CompareTag("Player")) || (target.gameObject.CompareTag("other")) )
+                        /*if((target.gameObject.CompareTag("Player")) || (target.gameObject.CompareTag("other")) )
                             if((thisbody.brickCount>1) && (thisbody.canKill) && (target.gameObject.GetComponent<player>().brickCount>2) && (rand < Mathf.Min((target.gameObject.GetComponent<player>().brickCount-thisbody.brickCount)*0.02f, 0.8f)))
                                 {
                                     Vector3 direct = Vector3.Normalize(target.transform.position -thisbody.transform.position);
@@ -169,7 +169,7 @@ public class enemyAI : MonoBehaviour
                                     nav.stoppingDistance=thisbody.fov.viewRadius-1;
                                     state=State.killing;
                                     break;
-                                }
+                                }*/
                     }
                 }
             }
@@ -250,7 +250,7 @@ public class enemyAI : MonoBehaviour
         thisbody.move(destination);
         //Debug.DrawLine(transform.position, destination);
         //Debug.Log(Vector3.Distance(destination,thisbody.transform.position));
-        if(Vector3.Distance(destination,thisbody.transform.position)<2f){
+        if(Vector3.Distance(destination,thisbody.transform.position)<1f){
         //if(map.path.GetClosestDistanceAlongPath(destination) < map.path.GetClosestDistanceAlongPath(thisbody.transform.position)){
             nav.enabled=true;
             state = State.running;

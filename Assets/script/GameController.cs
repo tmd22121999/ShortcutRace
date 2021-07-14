@@ -21,6 +21,7 @@ public class GameController : MonoBehaviour
      public GameObject gameOver,win,lose;
      public Image cooldown;
     public TextMeshProUGUI rankText,scoreText;
+    public RectTransform pointer;
     private bool isCooldown = false, canRevive=true;
     [Header ("Setting")]
     public Image soundImg;
@@ -119,5 +120,12 @@ public class GameController : MonoBehaviour
             vibrateImg.sprite =vibrateOff;
             vibrateToggle.Play("toggleOff");
         }
+    }
+    public void changeDefaultBrick(int brickNum){
+        StaticVar.setDefaultBrick(brickNum);
+    }
+    public void getMorePrize(){
+        int rand = Random.Range(1,6);
+        int loop = Random.Range(1,6);
     }
 }

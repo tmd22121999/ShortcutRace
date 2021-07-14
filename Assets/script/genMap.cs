@@ -7,11 +7,13 @@ using TMPro;
 public class genMap : MonoBehaviour
 {
     [Header ("brick")]
-    public PathCreator map;
-    int leng;
+    public Transform[] spawnPos;
+    
     public GameObject brick, startText;
     public Transform road;
     [Header ("Enemy")]
+    public PathCreator map;
+    int leng;
     public GameObject character;
     public Transform characterTransform;
    [Header ("Bonus")]
@@ -43,8 +45,9 @@ public class genMap : MonoBehaviour
     // Update is called once per frame
     public void generateBrick(int k){
         Vector3 instantPos,dir;
-        for(int i=2 ; i < leng ; i+=leng/k){
-            int rand = Random.Range(1,3); 
+        GameObject br;
+        for(int i=0 ; i < spawnPos.Length ; i++){
+            /*
             dir = map.path.GetDirection(i);
             //Debug.Log(map.path.GetRotationAtDistance(i));
             dir = new Vector3(dir.z/dir.z,dir.y,-dir.x/dir.x);
@@ -52,7 +55,10 @@ public class genMap : MonoBehaviour
             instantPos = map.path.GetPoint(i)-10*new Vector3(dir.x,-0.5f,dir.z)+(rand+0.5f)*dir*6;
             dir.y=map.path.GetRotationAtDistance(i).eulerAngles.y;
             Instantiate (brick,instantPos, Quaternion.Euler(dir),road);
-            //Debug.Log(dir);
+            Debug.Log(dir);*/
+            int rand = Random.Range(-1,2); 
+            br = Instantiate (brick,spawnPos[i]);
+            br.transform.localPosition += new Vector3(rand*7,0,0);
         }
     }
     
@@ -71,11 +77,11 @@ public class genMap : MonoBehaviour
     }
 
     public void genEnemy(){
-        float [][] random = {new float[]{0,0,0},new float[]{1,1,0},new float[]{1,0,1},new float[]{1,0.5f,0.5f},new float[]{0.5f,1,1}};
+        float [][] random = {new float[]{0,0,0},new float[]{1,1,0},new float[]{1,0,0.4f},new float[]{1,0.5f,0.5f},new float[]{0.5f,0.2f,1}};
         GameObject chrOjTmp;
         Vector3 instantPos;
         for(int i=0 ; i<5 ; i++){
-            instantPos = map.path.GetPoint(0) + new Vector3(-4*(i%2*2-1)*(-1),0,(i+0.2f)*2+4);
+            instantPos = map.path.GetPoint(0) + new Vector3(-4*(i%2*2-1)*(-1),0,(i*2+0.2f)*2+4);
             chrOjTmp = Instantiate (character , instantPos , Quaternion.Euler(new Vector3(0, 0, 0)) , characterTransform);
             chrOjTmp.GetComponent<enemyAI>().prority=random[i];
         }

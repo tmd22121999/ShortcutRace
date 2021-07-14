@@ -19,6 +19,9 @@ public class bonus : MonoBehaviour
         if(other.gameObject.CompareTag("Player")){
             scr.finalPoint=scr.finalPoint<rate*scr.scorePoint?rate*scr.scorePoint:scr.finalPoint;
             buc.material = mau;
+            if(rate==10){
+                other.gameObject.GetComponent<player>().dead();
+            }
             Destroy(this);
         }
     }

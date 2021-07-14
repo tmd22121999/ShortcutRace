@@ -20,18 +20,19 @@ public class JoystickPlayerExample : MonoBehaviour
             ani.SetInteger("end",0);
         if(speed > 0.1f)
             direction = Vector3.forward * FloatingJoystick.Vertical + Vector3.right * FloatingJoystick.Horizontal;
-        if(direction.magnitude>0.1f){
+        //if(direction.magnitude>0.1f){
             ani.SetBool("isrunning",true);
             direction = Vector3.Normalize(direction);
             //rb.AddForce(direction * speed * Time.fixedDeltaTime, ForceMode.VelocityChange);
-            thisplayer.transform.position+=direction * speed * Time.fixedDeltaTime;
+            thisplayer.transform.position+=thisplayer.transform.forward * speed * Time.fixedDeltaTime;
+            thisplayer.transform.Rotate(0.0f,direction.x*2 , 0.0f, Space.World);
             //Debug.Log(direction);
-            float rotateAngle= Vector3.SignedAngle(direction, Vector3.forward, Vector3.down);
-            transform.eulerAngles  =new Vector3(0,rotateAngle,0);
-        }else
-        {
-            ani.SetBool("isrunning",false);
-        }
+            //float rotateAngle= Vector3.SignedAngle(direction, Vector3.forward, Vector3.down);
+            //transform.eulerAngles  =new Vector3(0,rotateAngle,0);
+        //}else
+        //{
+        //    ani.SetBool("isrunning",false);
+        //}
         
     }
 }

@@ -12,11 +12,7 @@ public class enemy : player
         mapYPos=this.transform.position.y;
         oldspeed=speed;
     }
-    public override void kill(){
-        //if(speed==0)
-
-                    
-    }
+    
     public void kill2(){
         foreach(var x in fov.visibleTargets)
                     if(x!=null) {
