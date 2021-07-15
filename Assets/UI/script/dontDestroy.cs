@@ -5,10 +5,15 @@ using UnityEngine;
 public class dontDestroy : MonoBehaviour
 {
     // Start is called before the first frame update
-    
-    public static GameController instance;
+    //public static SceneLoaderGameObject instance = null;
+    public static dontDestroy instance = null;
     private void Awake() {
-        instance =  GameObject.FindWithTag("GameController").GetComponent<GameController>();
-        //DontDestroyOnLoad(this.gameObject);
+                if (instance == null) {
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+        }
+        else {
+        Destroy(gameObject);
+        }
     }
 }

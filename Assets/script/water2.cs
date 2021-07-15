@@ -6,7 +6,6 @@ public class water2 : MonoBehaviour
 {
     public player thisp;
     private int layerMask;
-    // Start is called before the first frame update
     private void Start() {
         layerMask = 1 << 9;
     }
@@ -26,12 +25,11 @@ public class water2 : MonoBehaviour
                     thisp.GetComponent<Rigidbody>().constraints |= RigidbodyConstraints.FreezePositionY;
                 thisp.lastPosOnGround =this.transform.position;    
             }
-             // Debug.Log("hit : " + hit.collider.name);
-            //Debug.Log(hit.transform.gameObject.tag);
-            //Debug.DrawLine(transform.position+new Vector3(0,1,0),hit.transform.position);
-            //Debug.DrawRay(transform.position+new Vector3(0,1,0),direction-new Vector3(0,1,0));
         }else{
             thisp.onWater=true;
+        }
+        if (Physics.Raycast(transform.position+new Vector3(0,3,0),direction, out hit, 10,1<<8)){
+            thisp.changeMove(0);
         }
     }
 }

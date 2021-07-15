@@ -12,6 +12,7 @@ TagManager:
   - bonus
   - obstacle
   - map
+  - joystick
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - 
   - ground
   - character
-  - 
+  - brick
   - 
   - 
   - 

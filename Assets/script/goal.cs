@@ -5,7 +5,7 @@ using UnityEngine;
 public class goal : MonoBehaviour
 {
     public int rank;
-    public GameController gameController;
+    public GameObject bonus;
     public GameObject[] another;
  
 
@@ -25,7 +25,7 @@ public class goal : MonoBehaviour
                 Destroy(x);
                 }
             if(rank==1)
-                gameController.activeBonus();
+                bonus.SetActive(true);  
             else
                 other.gameObject.GetComponent<player>().dead();
             

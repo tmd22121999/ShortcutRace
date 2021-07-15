@@ -44,21 +44,13 @@ public class genMap : MonoBehaviour
     }
     // Update is called once per frame
     public void generateBrick(int k){
-        Vector3 instantPos,dir;
+        // Vector3 instantPos,dir;
         GameObject br;
         for(int i=0 ; i < spawnPos.Length ; i++){
-            /*
-            dir = map.path.GetDirection(i);
-            //Debug.Log(map.path.GetRotationAtDistance(i));
-            dir = new Vector3(dir.z/dir.z,dir.y,-dir.x/dir.x);
-            Vector3.Normalize(dir);
-            instantPos = map.path.GetPoint(i)-10*new Vector3(dir.x,-0.5f,dir.z)+(rand+0.5f)*dir*6;
-            dir.y=map.path.GetRotationAtDistance(i).eulerAngles.y;
-            Instantiate (brick,instantPos, Quaternion.Euler(dir),road);
-            Debug.Log(dir);*/
+            
             int rand = Random.Range(-1,2); 
             br = Instantiate (brick,spawnPos[i]);
-            br.transform.localPosition += new Vector3(rand*7,0,0);
+            br.transform.localPosition += new Vector3(rand*5,0,0);
         }
     }
     

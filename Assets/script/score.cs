@@ -25,7 +25,7 @@ public class score : MonoBehaviour
              timer=3;
              finalPoint=scorePoint;
         }
-        ScoreText.text= finalPoint.ToString();
+        //ScoreText.text= finalPoint.ToString();
 
     }
  

@@ -12,6 +12,7 @@ public class JoystickPlayerExample : MonoBehaviour
     public Vector3 direction;
     public void FixedUpdate()
     {
+        FloatingJoystick = GameObject.FindGameObjectWithTag("joystick").GetComponent<FloatingJoystick>();
         if(ani.GetBool("isHit")!=thisplayer.isHit)
             ani.SetBool("isHit",thisplayer.isHit);
         if(ani.GetBool("isKilling")!=thisplayer.isKilling)

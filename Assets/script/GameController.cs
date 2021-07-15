@@ -10,7 +10,6 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    public GameObject bonus;
     [Header ("Menu UI")]
     public GameObject map;
     public GameObject menu, cur, pre, setting;
@@ -18,17 +17,20 @@ public class GameController : MonoBehaviour
     [Header ("End game UI")]
      public GameObject end;
 
-     public GameObject gameOver,win,lose;
+     public GameObject gameOver,win,lose, morePrizeImg;
      public Image cooldown;
     public TextMeshProUGUI rankText,scoreText;
     public RectTransform pointer;
+    public Animator pointAni;
     private bool isCooldown = false, canRevive=true;
     [Header ("Setting")]
     public Image soundImg;
     public Image vibrateImg;
     public Sprite soundOn, soundOff, vibrateOn, vibrateOff;
     public Animator soundToggle, vibrateToggle; 
-    
+    [Header ("game")]
+     public GameObject[] mapPrefab;
+    int rand,loop;
     public void GameOver() {
         cur=gameOver;
         cur.SetActive(true);
@@ -41,6 +43,18 @@ public class GameController : MonoBehaviour
     private void Update() {
         if(isCooldown){
             cooldown.fillAmount -= (1.0f / 5.0f )*Time.unscaledDeltaTime;
+            if(win.activeSelf)
+            if(pointAni.GetCurrentAnimatorStateInfo(0).normalizedTime > loop + rand/9f-0.02f){
+                pointAni.speed = 0;
+                int rate ;
+                if(rand % 4 == 1)
+                    rate =2;
+                else if(rand % 4 == 3)
+                    rate = 5;
+                else    
+                    rate = 3;
+                Debug.Log(rate);
+            }
         }
     }
      private IEnumerator  revive(float waitTime){
@@ -75,10 +89,15 @@ public class GameController : MonoBehaviour
         cur=map;
         cur.SetActive(true);  
     }
+    public void chooseMap(int i){
+        StaticVar.map=i;
+        //pre=cur;
+    }
     public void startGame(int i){
-        string map="Map"+i;
-        SceneManager.LoadScene(map);
+        StaticVar.map = i ;
         cur.SetActive(false);
+        //SceneManager.LoadSceneAsync("game");
+        Instantiate(mapPrefab[StaticVar.map-1]);
         //pre=cur;
     }
     public void back(){
@@ -90,11 +109,9 @@ public class GameController : MonoBehaviour
 
         }
     }
-    public void activeBonus(){
-        bonus.SetActive(true);  
-    }
+   
     public void returnMap(){
-         SceneManager.LoadScene("UItest");
+         SceneManager.LoadScene("UI");
     }
     public void onSetting(){
         pre = menu;
@@ -125,7 +142,12 @@ public class GameController : MonoBehaviour
         StaticVar.setDefaultBrick(brickNum);
     }
     public void getMorePrize(){
-        int rand = Random.Range(1,6);
-        int loop = Random.Range(1,6);
+        
+        rand = Random.Range(1,10);
+        loop = Random.Range(2,5);
+        morePrizeImg.SetActive(false);
+        pointAni.Play("pointwheel",0,0f);
+        isCooldown = true;
     }
+    
 }

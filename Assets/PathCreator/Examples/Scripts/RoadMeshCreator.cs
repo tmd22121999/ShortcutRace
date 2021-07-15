@@ -30,7 +30,13 @@ namespace PathCreation.Examples {
                 CreateRoadMesh ();
             }
         }
-
+        private void Start() {
+            
+                AssignMeshComponents ();
+                AssignMaterials ();
+                CreateRoadMesh ();
+            AssignMeshComponents ();
+        }
         void CreateRoadMesh () {
             Vector3[] verts = new Vector3[path.NumPoints * 8];
             Vector2[] uvs = new Vector2[verts.Length];
@@ -139,6 +145,7 @@ namespace PathCreation.Examples {
             if (!meshHolder.GetComponent<MeshCollider> ()) {
                 meshHolder.gameObject.AddComponent<MeshCollider> ();
             }
+            meshHolder.gameObject.layer=8;
             meshHolder.gameObject.tag="ground";
             meshRenderer = meshHolder.GetComponent<MeshRenderer> ();
             meshFilter = meshHolder.GetComponent<MeshFilter> ();

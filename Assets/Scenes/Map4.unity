@@ -1022,13 +1022,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 394510603}
-  m_LocalRotation: {x: 0.42261827, y: 0, z: 0, w: 0.9063079}
-  m_LocalPosition: {x: 15.86995, y: 26.4, z: -17.353886}
+  m_LocalRotation: {x: 0.30070576, y: 0, z: 0, w: 0.953717}
+  m_LocalPosition: {x: 48.17671, y: 26.4, z: 97.97405}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 50, y: 0, z: 0}
+  m_Father: {fileID: 1412893409}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 35, y: 0, z: 0}
 --- !u!1 &470060220
 GameObject:
   m_ObjectHideFlags: 0
@@ -1235,7 +1235,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &608654721
 GameObject:
@@ -2123,8 +2123,9 @@ GameObject:
   - component: {fileID: 823111770}
   - component: {fileID: 823111772}
   - component: {fileID: 823111771}
+  - component: {fileID: 823111773}
   m_Layer: 5
-  m_Name: Image
+  m_Name: point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2146,9 +2147,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.395, y: 0.3}
   m_AnchorMax: {x: 0.595, y: 0.5312745}
-  m_AnchoredPosition: {x: 1, y: 1.5}
+  m_AnchoredPosition: {x: 0.9999924, y: 0.000076293945}
   m_SizeDelta: {x: 0, y: 3}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0.00000009685755}
 --- !u!114 &823111771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2186,6 +2187,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 823111769}
   m_CullTransparentMesh: 0
+--- !u!95 &823111773
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 823111769}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 83e5b3dfb52220945b87bc779650649c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &829127663
 GameObject:
   m_ObjectHideFlags: 0
@@ -2509,7 +2529,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1228934460}
-        m_MethodName: 
+        m_MethodName: getMorePrize
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2768,7 +2788,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &973935677
 GameObject:
@@ -3282,7 +3302,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1159921627
 GameObject:
@@ -3420,6 +3440,8 @@ MonoBehaviour:
   cooldown: {fileID: 910482712}
   rankText: {fileID: 1830197069}
   scoreText: {fileID: 1989507755}
+  pointer: {fileID: 823111770}
+  pointAni: {fileID: 823111773}
   soundImg: {fileID: 0}
   vibrateImg: {fileID: 0}
   soundOn: {fileID: 0}
@@ -3915,6 +3937,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1388272267}
   m_CullTransparentMesh: 0
+--- !u!4 &1412893409 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7572165972710267450, guid: 7fd2acf0d2e5e7c4190bd1eff0112c99,
+    type: 3}
+  m_PrefabInstance: {fileID: 4001251298811243937}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1468954197
 GameObject:
   m_ObjectHideFlags: 0
@@ -4400,7 +4428,7 @@ GameObject:
   - component: {fileID: 1683841395}
   - component: {fileID: 1683841394}
   m_Layer: 5
-  m_Name: Image
+  m_Name: wheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4961,7 +4989,7 @@ PrefabInstance:
     - target: {fileID: 2867234210960113441, guid: 7fd2acf0d2e5e7c4190bd1eff0112c99,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2867234210960113441, guid: 7fd2acf0d2e5e7c4190bd1eff0112c99,
         type: 3}
