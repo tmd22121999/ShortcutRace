@@ -13,6 +13,7 @@ public class player : MonoBehaviour
     [Header ("Reference")]
     public fov2 fov;
     public GameObject brick,dat,gach;
+    public TextMeshPro nameText;
     [Header ("Other")]
     public float cooldown;
     public Vector3 stickPos;
@@ -35,6 +36,7 @@ public class player : MonoBehaviour
         gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         // số gạch mặc định
         brickDefault = StaticVar.defaultBrick;
+        nameText.text= StaticVar.namePlayer[0];
         brick.transform.localScale = new Vector3(0,0,0);
         fov.viewRadius=brickCount * 0.71f + 5;
         changeBrick(brickDefault - brickCount);
@@ -93,10 +95,7 @@ public class player : MonoBehaviour
             changeMove(true);
             jump.enabled = false;
 
-            Vector3 direction = transform.forward;
-            direction+=new Vector3(0,-0.7f,0);
-            //Debug.Log(direction);
-            Debug.DrawRay(pos+new Vector3(0,1,0),direction);
+            
             //if (Physics.Raycast(pos+new Vector3(0,1,0),direction, out hit, 10)){
              if(Physics.BoxCast(transform.position+new Vector3(0,3,0), dat.transform.lossyScale/1.5f, new Vector3(0,-1,0), out hit, transform.rotation, 6,~layerMask))   {
                 if(hit.transform.gameObject.CompareTag("water") ){
@@ -122,9 +121,9 @@ public class player : MonoBehaviour
         }
     //tang giam gacho.j,.
     public void changeBrick(int i){
-        oldspeed = oldspeed+ i/5f;
-        oldspeed = Mathf.Max(oldspeed,15f);
-        oldspeed = Mathf.Min(oldspeed,maxspeed);
+        //oldspeed = oldspeed+ i/5f;
+        //oldspeed = Mathf.Max(oldspeed,15f);
+        //oldspeed = Mathf.Min(oldspeed,maxspeed);
         brickCount+=i;
         if(brickCount<=0) {
             brickCount=0;

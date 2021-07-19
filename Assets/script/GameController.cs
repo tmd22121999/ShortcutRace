@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour
     [Header ("Menu UI")]
     public GameObject map;
     public GameObject menu, cur, pre, setting;
+    public Text coin;
     public int State; 
     [Header ("End game UI")]
      public GameObject end;
@@ -30,7 +31,17 @@ public class GameController : MonoBehaviour
     public Animator soundToggle, vibrateToggle; 
     [Header ("game")]
      public GameObject[] mapPrefab;
+     
     int rand,loop;
+    public Text startText;
+    public Animator startAni;
+    public Button pauseButton;
+    public GameObject startImg,pause,loadingPic;
+    private void Start() {
+        Data savedata = SaveData.load();
+        chooseMap(StaticVar.map);
+        coin.text = StaticVar.coin.ToString();
+    }
     public void GameOver() {
         cur=gameOver;
         cur.SetActive(true);
@@ -71,6 +82,7 @@ public class GameController : MonoBehaviour
         Time.timeScale = 1;
     }
     public void endGame(int rank){
+        
         Time.timeScale = 0;
         if(cur!=null)
             cur.SetActive(false); 
@@ -78,8 +90,10 @@ public class GameController : MonoBehaviour
         cur.SetActive(true); 
         if(rank == 1){
             win.SetActive(true);
+            lose.SetActive(false);
         }else{
             lose.SetActive(true);
+            win.SetActive(false);
         }
     }
     
@@ -87,17 +101,54 @@ public class GameController : MonoBehaviour
         cur.SetActive(false);
         pre=menu;
         cur=map;
-        cur.SetActive(true);  
+        cur.SetActive(true);
     }
     public void chooseMap(int i){
         StaticVar.map=i;
+        {
+            StartCoroutine(LoadAsynchronously(1));
+        }
+    
+        IEnumerator LoadAsynchronously(int sceneIndex)
+        {
+            AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
+    
+            loadingPic.SetActive(true);
+    
+            while (operation.isDone == false)
+            {
+                
+                yield return null;
+            }
+            loadingPic.SetActive(false);
+        }
+        cur.SetActive(false);
+        cur = menu;
+        cur.SetActive(true);
         //pre=cur;
     }
-    public void startGame(int i){
-        StaticVar.map = i ;
+    public void startGame(){
+        int text =3;
         cur.SetActive(false);
+        StartCoroutine(startCooldown());
+        IEnumerator startCooldown( )
+        {
+            startImg.SetActive(true);
+            startText.text = text.ToString();
+            startAni.speed = 1;
+            while(text>0){
+                yield return new WaitForSecondsRealtime(1);
+                text--;
+                startText.text = text.ToString();
+            }
+            //startText.SetActive(true);
+            //yield return new WaitForSecondsRealtime(3);
+            Time.timeScale = 1;
+            pauseButton.enabled = true;
+            startImg.SetActive(false);
+        }
+
         //SceneManager.LoadSceneAsync("game");
-        Instantiate(mapPrefab[StaticVar.map-1]);
         //pre=cur;
     }
     public void back(){
@@ -109,9 +160,24 @@ public class GameController : MonoBehaviour
 
         }
     }
+    public void pauseGame(){
+        cur = pause;
+        cur.SetActive(true);
+        Time.timeScale = 0;
+    }
    
     public void returnMap(){
-         SceneManager.LoadScene("UI");
+        StopAllCoroutines();
+        SaveData.save();  
+        canRevive = true ;
+        pauseButton.enabled = false;
+        cooldown.fillAmount = 1;
+        isCooldown = false;
+         cur.SetActive(false);
+         cur = menu ; 
+         cur.SetActive(true);
+        StaticVar.setDefaultBrick(0);
+         chooseMap(StaticVar.map);
     }
     public void onSetting(){
         pre = menu;
@@ -140,6 +206,7 @@ public class GameController : MonoBehaviour
     }
     public void changeDefaultBrick(int brickNum){
         StaticVar.setDefaultBrick(brickNum);
+        chooseMap(StaticVar.map);
     }
     public void getMorePrize(){
         
@@ -149,5 +216,8 @@ public class GameController : MonoBehaviour
         pointAni.Play("pointwheel",0,0f);
         isCooldown = true;
     }
-    
+    public void changeName(Text namePlayer){
+        StaticVar.namePlayer[0] = namePlayer.text;
+        chooseMap(StaticVar.map);
+    }
 }
