@@ -7,7 +7,7 @@ public class player : MonoBehaviour
     public int brickCount,brickDefault,maxScale = 70;
     [Header ("State")]
     public bool onWater=false;
-    public bool isHit=false,canKill=true, isKilling=false, passGoal=false;
+    public bool isHit=false,canKill=true, isKilling=false, passGoal=false,isJump = false;
     
     
     [Header ("Reference")]
@@ -187,7 +187,7 @@ public class player : MonoBehaviour
              this.gameObject.GetComponent<Rigidbody>().constraints &= ~(RigidbodyConstraints.FreezePositionX|RigidbodyConstraints.FreezePositionZ);
         }else if(other.gameObject.CompareTag("other") || other.gameObject.CompareTag("Player")){
             if(other.gameObject.GetComponent<player>().brickCount > brickCount){   
-                if(!isHit && other.gameObject.GetComponent<player>().canKill)
+                if(!isHit && other.gameObject.GetComponent<player>().canKill && !isJump)
                 if(!jump.enabled){
                            // float rotateAngle= Vector3.SignedAngle(-other.transform.forward, Vector3.forward, Vector3.down);
                             //transform.eulerAngles  =new Vector3(0,rotateAngle,0);
@@ -197,7 +197,8 @@ public class player : MonoBehaviour
                             changeMove(false);
                             isHit = true;other.gameObject.GetComponent<player>().canKill =false;
                         }
-                        
+                     
+                  
             }
               }
     }
@@ -226,7 +227,7 @@ public class player : MonoBehaviour
             }
     }
     private void OnCollisionExit(Collision other) {
-        if(other.gameObject.CompareTag("obstacle") || other.gameObject.CompareTag("other") || other.gameObject.CompareTag("Player")){
+        if(other.gameObject.CompareTag("obstacle") ){//} || other.gameObject.CompareTag("other") || other.gameObject.CompareTag("Player")){
              this.gameObject.GetComponent<Rigidbody>().constraints |= (RigidbodyConstraints.FreezePositionX|RigidbodyConstraints.FreezePositionZ);
         }
     }

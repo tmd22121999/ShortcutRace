@@ -275,6 +275,7 @@ MonoBehaviour:
   canKill: 1
   isKilling: 0
   passGoal: 0
+  isJump: 0
   fov: {fileID: 159494993551440408}
   brick: {fileID: 5841359419385000743}
   dat: {fileID: 53677339194358061, guid: 6b7c71444d8fa9f479a0612cff531969, type: 3}
@@ -346,7 +347,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 126
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!114 &7079894062587833984
 MonoBehaviour:

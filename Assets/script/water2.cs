@@ -21,8 +21,12 @@ public class water2 : MonoBehaviour
                 thisp.onWater=true;
             }else{
                 thisp.onWater=false;
-                if(hit.transform.gameObject.CompareTag("ground"))
-                    thisp.GetComponent<Rigidbody>().constraints |= RigidbodyConstraints.FreezePositionY;
+                if(hit.transform.gameObject.CompareTag("ground")){
+                    //thisp.GetComponent<Rigidbody>().constraints |= RigidbodyConstraints.FreezePositionY;
+                    if(thisp.isJump){
+                        thisp.GetComponent<Rigidbody>().constraints |= RigidbodyConstraints.FreezePositionY;
+                    }
+                }
                 thisp.lastPosOnGround =this.transform.position;    
             }
         }else{

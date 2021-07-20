@@ -31,7 +31,7 @@ public class genMap : MonoBehaviour
         leng = map.path.localPoints.Length;
         generateBrick(10);
         Time.timeScale = 0;
-        lastPos = bonusTransform.position;
+        lastPos = goal.position;
          genBonus(a,b);
          genEnemy();
          Destroy(this);
@@ -60,23 +60,25 @@ public class genMap : MonoBehaviour
         for(int i=2;i<11;i++){
             float rand = Random.Range(-a, a);
             x = goal.position.x -a/2+ rand;
-            rand = Random.Range(lastPos.z+7, goal.position.z+b*(i-1));
+            rand = Random.Range(lastPos.z+10, goal.position.z+b*(i-1));
             z = rand;
             lastPos = new Vector3(x,bonusTransform.position.y,z);
-            bnOjTmp = Instantiate (bonusObj , lastPos , Quaternion.Euler(new Vector3(0, 0, 0)) , bonusTransform);
+            bnOjTmp = Instantiate (bonusObj , lastPos , Quaternion.Euler(new Vector3(0, 180, 0)) , bonusTransform);
             bnOjTmp.GetComponent<bonus>().rate=i;
         }
     }
 
     public void genEnemy(){
         float [][] random = {new float[]{0,0,0},new float[]{1f,0.3f,0},new float[]{0.2f,0.9f,0.4f},new float[]{0.9f,0.5f,0.5f},new float[]{0.5f,0.2f,1}};
-        GameObject chrOjTmp;
+        GameObject[] chrOjTmp = new GameObject[5];
         Vector3 instantPos;
         for(int i=0 ; i<5 ; i++){
             instantPos = map.path.GetPoint(0) + new Vector3(-4*(i%2*2-1)*(-1),0,(i*2+0.2f)*2+4);
-            chrOjTmp = Instantiate (character , instantPos , Quaternion.Euler(new Vector3(0, 0, 0)) , characterTransform);
-            chrOjTmp.GetComponent<enemyAI>().prority=random[i];
-            chrOjTmp.GetComponent<player>().nameText.text = StaticVar.namePlayer[i+1] ;
+            chrOjTmp[i] = Instantiate (character , instantPos , Quaternion.Euler(new Vector3(0, 0, 0)) , characterTransform);
+            chrOjTmp[i].GetComponent<enemyAI>().prority=random[i];
+            chrOjTmp[i].GetComponent<player>().nameText.text = StaticVar.namePlayer[i+1] ;
+          
         }
+          goal.gameObject.GetComponent<goal>().another= chrOjTmp;
     }
 }
