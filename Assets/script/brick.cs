@@ -12,6 +12,9 @@ public class brick : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("other")){
             player thisbody=other.GetComponent<player>();
+            if(other.gameObject.CompareTag("Player") ){
+                thisbody.pickupSfx.Play();
+            }
             if((!thisbody.isKilling) && (!thisbody.isHit)){
                 thisbody.changeBrick(1);
                 Destroy(this.gameObject);
@@ -21,5 +24,6 @@ public class brick : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    
     
 }

@@ -9,6 +9,7 @@ public class bonus : MonoBehaviour
     public MeshRenderer buc;
     public Material mau;
     public int rate;
+    public AudioSource bonusSfx;
      private void Start() {
         scr = GameObject.FindGameObjectWithTag("Player").GetComponent<score>();
     }

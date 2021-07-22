@@ -12,6 +12,7 @@ public static class SaveData
         FileStream stream = new FileStream(path,FileMode.Create);
 
         Data data = new Data(StaticVar.coin, StaticVar.defaultBrick, StaticVar.map, StaticVar.namePlayer[0]);
+        Debug.Log(data.map);
         //Data data = new Data(2000, 5, 4, "day la ten");
         formatter.Serialize(stream, data);
         stream.Close(); 
@@ -30,6 +31,7 @@ public static class SaveData
         }
     }
     public static void setdata(Data data){
+        Debug.Log(data.map);
         StaticVar.coin= data.coin;
         StaticVar.defaultBrick = data.defaultBrick;
         StaticVar.map = data.map;

@@ -5,10 +5,9 @@ using UnityEngine;
 [System.Serializable]
 public class Data 
 {
-    // Start is called before the first frame update
     public  int coin; 
-    public  int defaultBrick = 0;
-    public  int map = 1;
+    public  int defaultBrick ;
+    public  int map ;
     public  string namePlayer;
     public Data(int c,int db,int m, string n){
         coin = c;

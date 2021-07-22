@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,16 +21,18 @@ public class goal : MonoBehaviour
     {
         rankNow = rank+1;
         for ( int r = 0; r < 5 ; r++) {
-            
-        if(another.Length<=r)
+        if(another.Length > 0)
+        //Debug.Log(another.Length);
             if(another[r] != null)
             if( Vector3.Distance(transform.position, player.transform.position) > Vector3.Distance(transform.position, another[r].transform.position)) {
                 rankNow++;
+                
+            
             }
-            Debug.Log(another[r]);
+           // Debug.Log(another[r]);
         }
         rankText.text = rankNow.ToString();
-        Debug.Log(rankNow);
+        //Debug.Log(rankNow);
     }
        void OnTriggerEnter(Collider other)
     {

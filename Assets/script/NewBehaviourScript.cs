@@ -7,9 +7,10 @@ public class NewBehaviourScript : MonoBehaviour
     
      public GameObject[] mapPrefab;
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
-        Instantiate(mapPrefab[StaticVar.map-1]);
+        Debug.Log(StaticVar.map);
+        Instantiate(mapPrefab[(StaticVar.map-1)%4]);
     }
 
 }

@@ -10,7 +10,10 @@ public class JoystickPlayerExample : MonoBehaviour
     public player thisplayer;
     public Animator ani;
     public Vector3 direction;
-    public void FixedUpdate()
+    
+    private void Update() {
+        
+    }    public void FixedUpdate()
     {
         FloatingJoystick = GameObject.FindGameObjectWithTag("joystick").GetComponent<FloatingJoystick>();
         if(ani.GetBool("isHit")!=thisplayer.isHit)
@@ -21,6 +24,7 @@ public class JoystickPlayerExample : MonoBehaviour
             ani.SetInteger("end",0);
         if(speed > 0.1f)
             direction = Vector3.forward * FloatingJoystick.Vertical + Vector3.right * FloatingJoystick.Horizontal;
+      
         //if(direction.magnitude>0.1f){
             ani.SetBool("isrunning",true);
             direction = Vector3.Normalize(direction);

@@ -18,6 +18,8 @@ public class genMap : MonoBehaviour
     public Transform characterTransform;
    [Header ("Bonus")]
     public GameObject bonusObj;
+    public Texture[] bonusTexture;
+    public MeshRenderer bonusMesh;
     public Transform bonusTransform,goal;
     private Vector3 lastPos;
      [TextArea]
@@ -50,7 +52,7 @@ public class genMap : MonoBehaviour
             
             int rand = Random.Range(-1,2); 
             br = Instantiate (brick,spawnPos[i]);
-            br.transform.localPosition += new Vector3(rand*5,0,0);
+            br.transform.localPosition += new Vector3(rand*4,0,0);
         }
     }
     
@@ -59,12 +61,14 @@ public class genMap : MonoBehaviour
         GameObject bnOjTmp;
         for(int i=2;i<11;i++){
             float rand = Random.Range(-a, a);
-            x = goal.position.x -a/2+ rand;
-            rand = Random.Range(lastPos.z+10, goal.position.z+b*(i-1));
+            x = goal.position.x + rand;
+            rand = Random.Range(lastPos.z+20, goal.position.z+b*(i-1));
             z = rand;
             lastPos = new Vector3(x,bonusTransform.position.y,z);
             bnOjTmp = Instantiate (bonusObj , lastPos , Quaternion.Euler(new Vector3(0, 180, 0)) , bonusTransform);
             bnOjTmp.GetComponent<bonus>().rate=i;
+            bnOjTmp.GetComponent<bonus>().buc.material.mainTexture = bonusTexture[i-2];
+            bnOjTmp.GetComponent<bonus>().bonusSfx = bonusTransform.gameObject.GetComponent<AudioSource>();
         }
     }
 

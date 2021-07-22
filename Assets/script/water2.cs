@@ -31,6 +31,7 @@ public class water2 : MonoBehaviour
             }
         }else{
             thisp.onWater=true;
+            Debug.Log("â");
         }
         if (Physics.Raycast(transform.position+new Vector3(0,3,0),direction, out hit, 10,1<<8)){
             thisp.changeMove(0);

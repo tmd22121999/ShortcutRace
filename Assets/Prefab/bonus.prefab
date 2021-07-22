@@ -60,9 +60,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scr: {fileID: 0}
-  buc: {fileID: 0}
+  buc: {fileID: 2222549879190030991}
   mau: {fileID: 2100000, guid: acb51df9dfe43d94c8fc2fb660e48425, type: 2}
   rate: 2
+  audioClip: {fileID: 8300000, guid: ceebbdc33e28a754f9cecd310df6fdaa, type: 3}
 --- !u!1001 &8846860241755175064
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -150,6 +151,12 @@ PrefabInstance:
 --- !u!4 &9028844211015425907 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1eb29a719fe334b40aecde5bfddfb0fd,
+    type: 3}
+  m_PrefabInstance: {fileID: 8846860241755175064}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &2222549879190030991 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7214284821732946455, guid: 1eb29a719fe334b40aecde5bfddfb0fd,
     type: 3}
   m_PrefabInstance: {fileID: 8846860241755175064}
   m_PrefabAsset: {fileID: 0}

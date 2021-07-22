@@ -112,10 +112,12 @@ public class enemyAI : MonoBehaviour
                   }
                 //}
             }
-            if(Vector3.Distance(transform.position,goal.transform.position) >15){
+            if(Vector3.Distance(transform.position,goal.transform.position) >30){
                 float dis = map.path.GetClosestDistanceAlongPath(thisbody.transform.position);
                 destination =  map.path.GetPointAtDistance(dis + 20);
 
+            }else{
+                destination = goal.transform.position;
             }
         }
 

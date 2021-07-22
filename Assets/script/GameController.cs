@@ -19,6 +19,7 @@ public class GameController : MonoBehaviour
      public GameObject end;
 
      public GameObject gameOver,win,lose, morePrizeImg;
+     public Button morePrize;
      public Image cooldown;
     public TextMeshProUGUI rankText,scoreText;
     public RectTransform pointer;
@@ -31,12 +32,14 @@ public class GameController : MonoBehaviour
     public Animator soundToggle, vibrateToggle; 
     [Header ("game")]
      public GameObject[] mapPrefab;
-     
-    int rand,loop;
+         int rand,loop;
     public Text startText;
     public Animator startAni;
     public Button pauseButton;
     public GameObject startImg,pause,loadingPic;
+    public AudioSource audioSource;
+     public AudioClip[] audioClips;
+
     private void Start() {
         Data savedata = SaveData.load();
         chooseMap(StaticVar.map);
@@ -55,7 +58,7 @@ public class GameController : MonoBehaviour
         if(isCooldown){
             cooldown.fillAmount -= (1.0f / 5.0f )*Time.unscaledDeltaTime;
             if(win.activeSelf)
-            if(pointAni.GetCurrentAnimatorStateInfo(0).normalizedTime > loop + rand/9f-0.02f){
+            if(pointAni.GetCurrentAnimatorStateInfo(0).normalizedTime > loop + rand/9f){
                 pointAni.speed = 0;
                 int rate ;
                 if(rand % 4 == 1)
@@ -64,6 +67,10 @@ public class GameController : MonoBehaviour
                     rate = 5;
                 else    
                     rate = 3;
+                StaticVar.coin +=150 * (rate-1);
+                morePrize.enabled = false;
+                coin.text = StaticVar.coin.ToString();
+                isCooldown = false;
                 Debug.Log(rate);
             }
         }
@@ -89,9 +96,18 @@ public class GameController : MonoBehaviour
         cur = end;
         cur.SetActive(true); 
         if(rank == 1){
+            morePrize.enabled = true;
+            StaticVar.map ++;
+            audioSource.clip = audioClips[0];
+            audioSource.Play();
+            StaticVar.coin += 150;
+            coin.text = StaticVar.coin.ToString();
+            SaveData.save();
             win.SetActive(true);
             lose.SetActive(false);
         }else{
+             audioSource.clip = audioClips[1];
+            audioSource.Play();
             lose.SetActive(true);
             win.SetActive(false);
         }
@@ -105,6 +121,7 @@ public class GameController : MonoBehaviour
     }
     public void chooseMap(int i){
         StaticVar.map=i;
+        SaveData.save();  
         {
             StartCoroutine(LoadAsynchronously(1));
         }
@@ -168,7 +185,6 @@ public class GameController : MonoBehaviour
    
     public void returnMap(){
         StopAllCoroutines();
-        SaveData.save();  
         canRevive = true ;
         pauseButton.enabled = false;
         cooldown.fillAmount = 1;
