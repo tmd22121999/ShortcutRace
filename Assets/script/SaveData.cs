@@ -11,7 +11,7 @@ public static class SaveData
         string path = Application.persistentDataPath  +"/save.data";
         FileStream stream = new FileStream(path,FileMode.Create);
 
-        Data data = new Data(StaticVar.coin, StaticVar.defaultBrick, StaticVar.map, StaticVar.namePlayer[0]);
+        Data data = new Data(StaticVar.coin, StaticVar.defaultBrick, StaticVar.map, StaticVar.upgrade2,StaticVar.namePlayer[0]);
         Debug.Log(data.map);
         //Data data = new Data(2000, 5, 4, "day la ten");
         formatter.Serialize(stream, data);
@@ -33,7 +33,8 @@ public static class SaveData
     public static void setdata(Data data){
         Debug.Log(data.map);
         StaticVar.coin= data.coin;
-        StaticVar.defaultBrick = data.defaultBrick;
+         StaticVar.upgrade2 = data.upgrade2 ;
+        StaticVar.defaultBrick = data.upgrade2 ;
         StaticVar.map = data.map;
         StaticVar.namePlayer[0]= data.namePlayer;
     }

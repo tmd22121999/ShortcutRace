@@ -12,7 +12,8 @@ public class GameController : MonoBehaviour
 {
     [Header ("Menu UI")]
     public GameObject map;
-    public GameObject menu, cur, pre, setting;
+    public GameObject menu, cur, pre, setting, shop,progress;
+    public GameObject[] progressMap;
     public Text coin;
     public int State; 
     [Header ("End game UI")]
@@ -24,6 +25,7 @@ public class GameController : MonoBehaviour
     public TextMeshProUGUI rankText,scoreText;
     public RectTransform pointer;
     public Animator pointAni;
+    public GameObject reviveobj, retry;
     private bool isCooldown = false, canRevive=true;
     [Header ("Setting")]
     public Image soundImg;
@@ -51,8 +53,11 @@ public class GameController : MonoBehaviour
         Time.timeScale = 0;
         if(canRevive)
             StartCoroutine(revive(5));
-        else
-            endGame(7);
+        else{
+            reviveobj.SetActive(false);
+            retry.SetActive(true);
+            //endGame(7);
+        }
     }
     private void Update() {
         if(isCooldown){
@@ -64,11 +69,11 @@ public class GameController : MonoBehaviour
                 if(rand % 4 == 1)
                     rate =2;
                 else if(rand % 4 == 3)
-                    rate = 5;
+                    rate = 4;
                 else    
                     rate = 3;
                 StaticVar.coin +=150 * (rate-1);
-                morePrize.enabled = false;
+                
                 coin.text = StaticVar.coin.ToString();
                 isCooldown = false;
                 Debug.Log(rate);
@@ -79,7 +84,8 @@ public class GameController : MonoBehaviour
         isCooldown = true;
         canRevive = false;
         yield return new WaitForSecondsRealtime(waitTime);
-        endGame(7);
+        reviveobj.SetActive(false);
+        retry.SetActive(true);
         isCooldown = false;
     }
     public void resume(){
@@ -90,6 +96,7 @@ public class GameController : MonoBehaviour
     }
     public void endGame(int rank){
         
+        progress.SetActive(true);
         Time.timeScale = 0;
         if(cur!=null)
             cur.SetActive(false); 
@@ -119,8 +126,25 @@ public class GameController : MonoBehaviour
         cur=map;
         cur.SetActive(true);
     }
+    
+    public void enterShop(){
+        
+        progress.SetActive(false);
+        cur.SetActive(false);
+        pre=menu;
+        cur=shop;
+        cur.SetActive(true);
+    }
     public void chooseMap(int i){
+
         StaticVar.map=i;
+        progress.SetActive(true);
+        for(int j=0;j<4;j++){
+            if( j < (StaticVar.map+3) % 4)
+                progressMap[j].SetActive(false);
+            else 
+                progressMap[j].SetActive(true);
+        }
         SaveData.save();  
         {
             StartCoroutine(LoadAsynchronously(1));
@@ -147,6 +171,8 @@ public class GameController : MonoBehaviour
     public void startGame(){
         int text =3;
         cur.SetActive(false);
+        
+        progress.SetActive(false);
         StartCoroutine(startCooldown());
         IEnumerator startCooldown( )
         {
@@ -170,6 +196,7 @@ public class GameController : MonoBehaviour
     }
     public void back(){
         if(pre!=null){
+            progress.SetActive(true);
             cur.SetActive(false);
             pre.SetActive(true);
             cur=pre;
@@ -184,6 +211,8 @@ public class GameController : MonoBehaviour
     }
    
     public void returnMap(){
+        reviveobj.SetActive(true);
+            retry.SetActive(false);
         StopAllCoroutines();
         canRevive = true ;
         pauseButton.enabled = false;
@@ -221,7 +250,7 @@ public class GameController : MonoBehaviour
         }
     }
     public void changeDefaultBrick(int brickNum){
-        StaticVar.setDefaultBrick(brickNum);
+        StaticVar.defaultBrick = StaticVar.upgrade2 + brickNum ;
         chooseMap(StaticVar.map);
     }
     public void getMorePrize(){
@@ -229,11 +258,20 @@ public class GameController : MonoBehaviour
         rand = Random.Range(1,10);
         loop = Random.Range(2,5);
         morePrizeImg.SetActive(false);
+        morePrize.enabled = false;
         pointAni.Play("pointwheel",0,0f);
         isCooldown = true;
     }
     public void changeName(Text namePlayer){
         StaticVar.namePlayer[0] = namePlayer.text;
         chooseMap(StaticVar.map);
+    }
+    public void Upgrade2(){
+        if(StaticVar.coin >= 1500){
+            StaticVar.coin -=1500;
+            StaticVar.upgrade2++;
+            chooseMap(StaticVar.map);
+
+        }
     }
 }
