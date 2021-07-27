@@ -41,11 +41,22 @@ public class GameController : MonoBehaviour
     public GameObject startImg,pause,loadingPic;
     public AudioSource audioSource;
      public AudioClip[] audioClips;
+     [Header ("upgrade, shop, coin")]
+     public Text lv1;
+     public Text lv2, cost1, cost2, coinRewardText;
+     private int coinReward;
+     public GameObject unlock;
+     public int text=0;
 
     private void Start() {
+        Time.timeScale = 0;
         Data savedata = SaveData.load();
-        chooseMap(StaticVar.map);
+        chooseMap(savedata.map);
         coin.text = StaticVar.coin.ToString();
+        lv1.text="Lvl "+(StaticVar.upgrade1+1).ToString();
+        lv2.text="Lvl "+(StaticVar.upgrade2+1).ToString();
+        cost1.text=((StaticVar.upgrade1+1)*1000).ToString();
+        cost2.text=((StaticVar.upgrade2+1)*1000).ToString();
     }
     public void GameOver() {
         cur=gameOver;
@@ -62,7 +73,7 @@ public class GameController : MonoBehaviour
     private void Update() {
         if(isCooldown){
             cooldown.fillAmount -= (1.0f / 5.0f )*Time.unscaledDeltaTime;
-            if(win.activeSelf)
+            if(pointAni.GetCurrentAnimatorStateInfo(0).IsName("pointwheel"))
             if(pointAni.GetCurrentAnimatorStateInfo(0).normalizedTime > loop + rand/9f){
                 pointAni.speed = 0;
                 int rate ;
@@ -72,8 +83,9 @@ public class GameController : MonoBehaviour
                     rate = 4;
                 else    
                     rate = 3;
-                StaticVar.coin +=150 * (rate-1);
-                
+                StaticVar.coin +=coinReward * (rate-1);
+                coinReward = coinReward * rate;
+                coinRewardText.text = "   Get\n"+coinReward.ToString();
                 coin.text = StaticVar.coin.ToString();
                 isCooldown = false;
                 Debug.Log(rate);
@@ -103,13 +115,17 @@ public class GameController : MonoBehaviour
         cur = end;
         cur.SetActive(true); 
         if(rank == 1){
+            pre = cur;
+            cur = unlock;
+            cur.SetActive(true);
             morePrize.enabled = true;
+            coinReward =  (50+StaticVar.map*10)*StaticVar.rate;
+            StaticVar.coin += coinReward;
+            coinRewardText.text ="  Get\n"+ coinReward.ToString();
+            coin.text = StaticVar.coin.ToString();
             StaticVar.map ++;
             audioSource.clip = audioClips[0];
             audioSource.Play();
-            StaticVar.coin += 150;
-            coin.text = StaticVar.coin.ToString();
-            SaveData.save();
             win.SetActive(true);
             lose.SetActive(false);
         }else{
@@ -118,6 +134,17 @@ public class GameController : MonoBehaviour
             lose.SetActive(true);
             win.SetActive(false);
         }
+    }
+    public void skipLevel(){
+        progress.SetActive(true);
+        Time.timeScale = 0;
+        if(cur!=null)
+            cur.SetActive(false); 
+        cur.SetActive(true); 
+            StaticVar.map ++;
+            audioSource.clip = audioClips[0];
+            audioSource.Play();
+            returnMap();
     }
     
     public void enterMap(){
@@ -169,7 +196,7 @@ public class GameController : MonoBehaviour
         //pre=cur;
     }
     public void startGame(){
-        int text =3;
+         text =3;
         cur.SetActive(false);
         
         progress.SetActive(false);
@@ -211,6 +238,8 @@ public class GameController : MonoBehaviour
     }
    
     public void returnMap(){
+        morePrizeImg.SetActive(true);
+        morePrize.enabled = true;
         reviveobj.SetActive(true);
             retry.SetActive(false);
         StopAllCoroutines();
@@ -221,7 +250,7 @@ public class GameController : MonoBehaviour
          cur.SetActive(false);
          cur = menu ; 
          cur.SetActive(true);
-        StaticVar.setDefaultBrick(0);
+        StaticVar.defaultBrick = StaticVar.upgrade2;
          chooseMap(StaticVar.map);
     }
     public void onSetting(){
@@ -254,11 +283,12 @@ public class GameController : MonoBehaviour
         chooseMap(StaticVar.map);
     }
     public void getMorePrize(){
-        
         rand = Random.Range(1,10);
         loop = Random.Range(2,5);
+        Debug.Log(rand);
         morePrizeImg.SetActive(false);
         morePrize.enabled = false;
+        pointAni.speed = 1;
         pointAni.Play("pointwheel",0,0f);
         isCooldown = true;
     }
@@ -267,11 +297,29 @@ public class GameController : MonoBehaviour
         chooseMap(StaticVar.map);
     }
     public void Upgrade2(){
-        if(StaticVar.coin >= 1500){
-            StaticVar.coin -=1500;
+        if(StaticVar.coin >= (StaticVar.upgrade2+1)*1000){
+            StaticVar.coin -=(StaticVar.upgrade2+1)*1000;
             StaticVar.upgrade2++;
+            coin.text = StaticVar.coin.ToString();
+            lv1.text="Lvl "+(StaticVar.upgrade1+1).ToString();
+            lv2.text="Lvl "+(StaticVar.upgrade2+1).ToString();
+            cost1.text=((StaticVar.upgrade1+1)*1000).ToString();
+            cost2.text=((StaticVar.upgrade2+1)*1000).ToString();
+            StaticVar.defaultBrick = StaticVar.upgrade2;
             chooseMap(StaticVar.map);
-
+        }
+    }
+    
+    public void Upgrade1(){
+        if(StaticVar.coin >= (StaticVar.upgrade1+1)*1000){
+            StaticVar.coin -=(int)((StaticVar.upgrade1+1)*1000);
+            StaticVar.upgrade1++;
+            coin.text = StaticVar.coin.ToString();
+            lv1.text="Lvl "+(StaticVar.upgrade1+1).ToString();
+            lv2.text="Lvl "+(StaticVar.upgrade2+1).ToString();
+            cost1.text=((StaticVar.upgrade1+1)*1000).ToString();
+            cost2.text=((StaticVar.upgrade2+1)*1000).ToString();
+            chooseMap(StaticVar.map);
         }
     }
 }

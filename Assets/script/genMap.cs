@@ -32,7 +32,6 @@ public class genMap : MonoBehaviour
         //map = GameObject.FindWithTag("ground").GetComponent<PathCreator>();
         leng = map.path.localPoints.Length;
         generateBrick(10);
-        Time.timeScale = 0;
         lastPos = goal.position;
          genBonus(a,b);
          genEnemy();
@@ -80,7 +79,9 @@ public class genMap : MonoBehaviour
             instantPos = map.path.GetPoint(0) + new Vector3(-4*(i%2*2-1)*(-1),0,(i*2+0.2f)*2+4);
             chrOjTmp[i] = Instantiate (character , instantPos , Quaternion.Euler(new Vector3(0, 0, 0)) , characterTransform);
             chrOjTmp[i].GetComponent<enemyAI>().prority=random[i];
-            chrOjTmp[i].GetComponent<player>().nameText.text = StaticVar.namePlayer[i+1] ;
+            string[] names = new string[] { "Peter", "Ron", "Satchmo","tomoA","friendB","sakura","johnathan","maria", "someone1", "enemy", "kedich", "nguyen van C", "abcsdf"};
+            
+            chrOjTmp[i].GetComponent<player>().nameText.text = names[Random.Range(0, names.Length)]; ;
           
         }
           goal.gameObject.GetComponent<goal>().another= chrOjTmp;

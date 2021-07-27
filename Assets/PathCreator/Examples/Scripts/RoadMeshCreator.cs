@@ -83,7 +83,13 @@ namespace PathCreation.Examples {
                 // Set uv on y axis to path time (0 at start of path, up to 1 at end of path)
                 uvs[vertIndex + 0] = new Vector2 (0, path.times[i]);
                 uvs[vertIndex + 1] = new Vector2 (1, path.times[i]);
-
+                uvs[vertIndex + 2] = new Vector2 (2, path.times[i]);
+                 uvs[vertIndex + 3] = new Vector2 (3, path.times[i]);
+                 
+                 uvs[vertIndex + 4] = new Vector2 (4, path.times[i]);
+                 uvs[vertIndex + 5] = new Vector2 (5, path.times[i]);
+                  uvs[vertIndex + 7] = new Vector2 (7, path.times[i]);
+                 uvs[vertIndex + 6] = new Vector2 (6, path.times[i]);
                 // Top of road normals
                 normals[vertIndex + 0] = localUp;
                 normals[vertIndex + 1] = localUp;

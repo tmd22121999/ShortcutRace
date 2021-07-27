@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5005619237583906578}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 9028844211015425907}
@@ -41,7 +41,7 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5005619237583906578}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 4
   m_Convex: 1
@@ -63,7 +63,7 @@ MonoBehaviour:
   buc: {fileID: 2222549879190030991}
   mau: {fileID: 2100000, guid: acb51df9dfe43d94c8fc2fb660e48425, type: 2}
   rate: 2
-  audioClip: {fileID: 8300000, guid: ceebbdc33e28a754f9cecd310df6fdaa, type: 3}
+  bonusSfx: {fileID: 0}
 --- !u!1001 &8846860241755175064
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -99,7 +99,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 1eb29a719fe334b40aecde5bfddfb0fd,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.108
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1eb29a719fe334b40aecde5bfddfb0fd,
         type: 3}

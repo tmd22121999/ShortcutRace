@@ -224,7 +224,7 @@ public class player : MonoBehaviour
     }
     public void afterhit(Vector3 pos){
         this.transform.position = pos;
-        isHit=false;
+        
             jump.SetBool("ishit", false);
             changeMove(true);
             jump.enabled = false;
@@ -239,6 +239,7 @@ public class player : MonoBehaviour
                 Debug.Log("endgame");
                     stillAlive = false;
             }
+            isHit=false;
             if(!stillAlive){
                 transform.position = lastPosOnGround;
                 changeBrick(5);

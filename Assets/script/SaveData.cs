@@ -3,6 +3,8 @@ using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Runtime.Serialization.Formatters.Binary;
+using System;
+using System.Globalization;
 
 public static class SaveData 
 {
@@ -11,8 +13,8 @@ public static class SaveData
         string path = Application.persistentDataPath  +"/save.data";
         FileStream stream = new FileStream(path,FileMode.Create);
 
-        Data data = new Data(StaticVar.coin, StaticVar.defaultBrick, StaticVar.map, StaticVar.upgrade2,StaticVar.namePlayer[0]);
-        Debug.Log(data.map);
+        Data data = new Data(StaticVar.coin, StaticVar.defaultBrick, StaticVar.map, StaticVar.upgrade1, StaticVar.upgrade2,StaticVar.namePlayer[0],DateTime.Now);
+        
         //Data data = new Data(2000, 5, 4, "day la ten");
         formatter.Serialize(stream, data);
         stream.Close(); 
@@ -33,6 +35,8 @@ public static class SaveData
     public static void setdata(Data data){
         Debug.Log(data.map);
         StaticVar.coin= data.coin;
+         StaticVar.upgrade1 = data.upgrade1 ;
+         StaticVar.coin+= (int)(data.upgrade1/2 * (int)((DateTime.Now - data.lastSaveTime).TotalMinutes)) ;
          StaticVar.upgrade2 = data.upgrade2 ;
         StaticVar.defaultBrick = data.upgrade2 ;
         StaticVar.map = data.map;
