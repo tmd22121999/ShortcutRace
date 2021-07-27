@@ -47,9 +47,11 @@ public class GameController : MonoBehaviour
      private int coinReward;
      public GameObject unlock;
      public int text=0;
+     public GameObject[] skinB;
 
     private void Start() {
         Time.timeScale = 0;
+        chooseMap(savedata.map);
         Data savedata = SaveData.load();
         chooseMap(savedata.map);
         coin.text = StaticVar.coin.ToString();
@@ -301,9 +303,7 @@ public class GameController : MonoBehaviour
             StaticVar.coin -=(StaticVar.upgrade2+1)*1000;
             StaticVar.upgrade2++;
             coin.text = StaticVar.coin.ToString();
-            lv1.text="Lvl "+(StaticVar.upgrade1+1).ToString();
             lv2.text="Lvl "+(StaticVar.upgrade2+1).ToString();
-            cost1.text=((StaticVar.upgrade1+1)*1000).ToString();
             cost2.text=((StaticVar.upgrade2+1)*1000).ToString();
             StaticVar.defaultBrick = StaticVar.upgrade2;
             chooseMap(StaticVar.map);
@@ -316,10 +316,12 @@ public class GameController : MonoBehaviour
             StaticVar.upgrade1++;
             coin.text = StaticVar.coin.ToString();
             lv1.text="Lvl "+(StaticVar.upgrade1+1).ToString();
-            lv2.text="Lvl "+(StaticVar.upgrade2+1).ToString();
             cost1.text=((StaticVar.upgrade1+1)*1000).ToString();
-            cost2.text=((StaticVar.upgrade2+1)*1000).ToString();
             chooseMap(StaticVar.map);
         }
+    }
+    public void changeSkin(int skinNum){
+        StaticVar.skinBrick = skinNum;
+        chooseMap(StaticVar.map);
     }
 }

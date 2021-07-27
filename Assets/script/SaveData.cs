@@ -13,7 +13,7 @@ public static class SaveData
         string path = Application.persistentDataPath  +"/save.data";
         FileStream stream = new FileStream(path,FileMode.Create);
 
-        Data data = new Data(StaticVar.coin, StaticVar.defaultBrick, StaticVar.map, StaticVar.upgrade1, StaticVar.upgrade2,StaticVar.namePlayer[0],DateTime.Now);
+        Data data = new Data(StaticVar.coin, StaticVar.defaultBrick, StaticVar.map, StaticVar.upgrade1, StaticVar.upgrade2, StaticVar.skinBrick,StaticVar.namePlayer[0],DateTime.Now);
         
         //Data data = new Data(2000, 5, 4, "day la ten");
         formatter.Serialize(stream, data);
@@ -38,6 +38,7 @@ public static class SaveData
          StaticVar.upgrade1 = data.upgrade1 ;
          StaticVar.coin+= (int)(data.upgrade1/2 * (int)((DateTime.Now - data.lastSaveTime).TotalMinutes)) ;
          StaticVar.upgrade2 = data.upgrade2 ;
+         StaticVar.skinBrick = data.skinBrick;
         StaticVar.defaultBrick = data.upgrade2 ;
         StaticVar.map = data.map;
         StaticVar.namePlayer[0]= data.namePlayer;

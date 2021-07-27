@@ -34,10 +34,12 @@ public class player : MonoBehaviour
      RaycastHit hit;
      
     void Start()
-    {
+        {  
+        gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+        dat = gameController.skinB[StaticVar.skinBrick%6];
+    
         oldspeed=pmove.speed;
         mapYPos=this.transform.position.y ;
-        gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         // số gạch mặc định
         brickDefault = StaticVar.defaultBrick;
         nameText.text= StaticVar.namePlayer[0];
