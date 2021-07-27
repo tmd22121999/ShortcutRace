@@ -51,7 +51,7 @@ public class GameController : MonoBehaviour
 
     private void Start() {
         Time.timeScale = 0;
-        chooseMap(savedata.map);
+        chooseMap(StaticVar.map);
         Data savedata = SaveData.load();
         chooseMap(savedata.map);
         coin.text = StaticVar.coin.ToString();
