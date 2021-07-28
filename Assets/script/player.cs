@@ -33,6 +33,7 @@ public class player : MonoBehaviour
      bool stillAlive = false;
      RaycastHit hit;
      
+  
     void Start()
         {  
         gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();

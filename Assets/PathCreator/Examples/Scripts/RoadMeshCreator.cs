@@ -22,7 +22,9 @@ namespace PathCreation.Examples {
         MeshRenderer meshRenderer;
         Mesh mesh;
         MeshCollider meshCollider;
-
+        [Header ("material")]
+            public Texture[] roadTexture;
+            public Texture[] undersideTexture;
         protected override void PathUpdated () {
             if (pathCreator != null) {
                 AssignMeshComponents ();
@@ -34,8 +36,15 @@ namespace PathCreation.Examples {
             
                 AssignMeshComponents ();
                 AssignMaterials ();
+                
+                int textureIndex = (StaticVar.map-1) - (StaticVar.map-1)%4;
+                textureIndex = textureIndex/4;
+                textureIndex = textureIndex%3;
+                meshRenderer.sharedMaterials[0].mainTexture = roadTexture[textureIndex];
+                meshRenderer.sharedMaterials[2].mainTexture = undersideTexture[textureIndex];
                 CreateRoadMesh ();
             AssignMeshComponents ();
+
         }
         void CreateRoadMesh () {
             Vector3[] verts = new Vector3[path.NumPoints * 8];

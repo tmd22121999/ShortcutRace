@@ -9,7 +9,7 @@ public class genMap : MonoBehaviour
     [Header ("brick")]
     public Transform[] spawnPos;
     
-    public GameObject brick, startText;
+    public GameObject brick, startText, startBrick;
     public Transform road;
     [Header ("Enemy")]
     public PathCreator map;
@@ -76,11 +76,11 @@ public class genMap : MonoBehaviour
         GameObject[] chrOjTmp = new GameObject[5];
         Vector3 instantPos;
         for(int i=0 ; i<5 ; i++){
-            instantPos = map.path.GetPoint(0) + new Vector3(-4*(i%2*2-1)*(-1),0,(i*2+0.2f)*2+4);
+            instantPos = map.path.GetPoint(0) + new Vector3(4*(i%2*2-1)-1,0,(i*2+0.2f)*6+25);
             chrOjTmp[i] = Instantiate (character , instantPos , Quaternion.Euler(new Vector3(0, 0, 0)) , characterTransform);
             chrOjTmp[i].GetComponent<enemyAI>().prority=random[i];
-            string[] names = new string[] { "Peter", "Ron", "Satchmo","tomoA","friendB","sakura","johnathan","maria", "someone1", "enemy", "kedich", "nguyen van C", "abcsdf"};
-            
+            string[] names = new string[] { "Peter", "Ron", "Satchmo","sachou","tencho","sakura","johnathan","magot", "someone1", "pro gamer", "talon", "nguyen van C", "abcsdf"};
+            Instantiate (startBrick,instantPos+new Vector3(0,0,12),Quaternion.Euler(new Vector3(0, 0, 0)) );
             chrOjTmp[i].GetComponent<player>().nameText.text = names[Random.Range(0, names.Length)]; ;
           
         }

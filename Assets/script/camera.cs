@@ -15,16 +15,21 @@ public class camera : MonoBehaviour {
     void LateUpdate () 
     {
         // Set the position of the camera's transform to be the same as the player's, but offset by the calculated offset distance.
-        int ratio = 20 + Mathf.Min(pl.brickCount,40)/2;
-        Vector3 targetCamPos = player.transform.position + new Vector3(-ratio*Vector3.Normalize(player.transform.forward).x,ratio*2/3,-ratio*Vector3.Normalize(player.transform.forward).z);
+        int ratio = 25 + Mathf.Min(pl.brickCount,40)/2;
+        Vector3 targetCamPos = player.transform.position + new Vector3(-ratio*Vector3.Normalize(player.transform.forward).x,ratio*2/3,-ratio*Vector3.Normalize(player.transform.forward).z-5);
         //transform.position = Vector3.Lerp (transform.position, targetCamPos, smoothing * Time.deltaTime);
-        if(pl.isHit)
+        if(pl.isHit){
             transform.position = targetCamPos;
-        else
-        transform.position = Vector3.Lerp (transform.position, targetCamPos, smoothing * Time.deltaTime);
+            transform.LookAt(player.transform.position);
+
+        }
+        else{
+            transform.position = Vector3.Lerp (transform.position, targetCamPos, smoothing * Time.deltaTime);
+            transform.LookAt(player.transform.position);
+        }
         if(pl.gameController.text>0){
             transform.position = Vector3.Lerp (transform.position, targetCamPos, smoothing * Time.unscaledDeltaTime);
-
+            transform.LookAt(player.transform.position);
         }
     }
     

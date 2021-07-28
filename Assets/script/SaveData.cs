@@ -13,7 +13,7 @@ public static class SaveData
         string path = Application.persistentDataPath  +"/save.data";
         FileStream stream = new FileStream(path,FileMode.Create);
 
-        Data data = new Data(StaticVar.coin, StaticVar.defaultBrick, StaticVar.map, StaticVar.upgrade1, StaticVar.upgrade2, StaticVar.skinBrick,StaticVar.namePlayer[0],DateTime.Now);
+        Data data = new Data(StaticVar.coin, StaticVar.defaultBrick, StaticVar.map, StaticVar.upgrade1, StaticVar.upgrade2, StaticVar.skinBrick,StaticVar.bonus,StaticVar.skinUnlocked,StaticVar.namePlayer[0],DateTime.Now);
         
         //Data data = new Data(2000, 5, 4, "day la ten");
         formatter.Serialize(stream, data);
@@ -39,8 +39,26 @@ public static class SaveData
          StaticVar.coin+= (int)(data.upgrade1/2 * (int)((DateTime.Now - data.lastSaveTime).TotalMinutes)) ;
          StaticVar.upgrade2 = data.upgrade2 ;
          StaticVar.skinBrick = data.skinBrick;
+         StaticVar.skinUnlocked = data.skinUnlocked;
+         StaticVar.bonus = data.bonus;
         StaticVar.defaultBrick = data.upgrade2 ;
         StaticVar.map = data.map;
         StaticVar.namePlayer[0]= data.namePlayer;
+        for(int i=0;i<StaticVar.skinUnlocked.Length;i++){
+            if(StaticVar.skinUnlocked[i]<2){
+                StaticVar.bonusSkin = i;
+            }
+        }
+    }
+    public static void resetSave(){
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = Application.persistentDataPath  +"/save.data";
+        FileStream stream = new FileStream(path,FileMode.Create);
+        int[] sunlock= {3,1,0,1,1,2};
+        Data data = new Data(0, 0, 1, 0, 0, 0,0,sunlock,"name",DateTime.Now);
+        
+        //Data data = new Data(2000, 5, 4, "day la ten");
+        formatter.Serialize(stream, data);
+        stream.Close(); 
     }
 }

@@ -22,11 +22,15 @@ public class GameController : MonoBehaviour
      public GameObject gameOver,win,lose, morePrizeImg;
      public Button morePrize;
      public Image cooldown;
-    public TextMeshProUGUI rankText,scoreText;
+    public Text rankText,scoreText;
     public RectTransform pointer;
     public Animator pointAni;
     public GameObject reviveobj, retry;
     private bool isCooldown = false, canRevive=true;
+    [Header ("unlock bonus")]
+    public Text unlockText;
+    public Image unlockImg,bonusSkinImg;
+    public GameObject thanks,xemads;
     [Header ("Setting")]
     public Image soundImg;
     public Image vibrateImg;
@@ -46,14 +50,19 @@ public class GameController : MonoBehaviour
      public Text lv2, cost1, cost2, coinRewardText;
      private int coinReward;
      public GameObject unlock;
+     public shop shopCtl;
      public int text=0;
      public GameObject[] skinB;
 
     private void Start() {
         Time.timeScale = 0;
-        chooseMap(StaticVar.map);
-        Data savedata = SaveData.load();
-        chooseMap(savedata.map);
+        if(SaveData.load() == null)
+            chooseMap(StaticVar.map);
+        else {
+            Data savedata = SaveData.load();
+            chooseMap(savedata.map);
+            SaveData.save();
+        }
         coin.text = StaticVar.coin.ToString();
         lv1.text="Lvl "+(StaticVar.upgrade1+1).ToString();
         lv2.text="Lvl "+(StaticVar.upgrade2+1).ToString();
@@ -61,6 +70,7 @@ public class GameController : MonoBehaviour
         cost2.text=((StaticVar.upgrade2+1)*1000).ToString();
     }
     public void GameOver() {
+        pauseButton.enabled = false;
         cur=gameOver;
         cur.SetActive(true);
         Time.timeScale = 0;
@@ -109,17 +119,29 @@ public class GameController : MonoBehaviour
         Time.timeScale = 1;
     }
     public void endGame(int rank){
-        
+        pauseButton.enabled = false;
         progress.SetActive(true);
         Time.timeScale = 0;
         if(cur!=null)
             cur.SetActive(false); 
-        cur = end;
-        cur.SetActive(true); 
+        
         if(rank == 1){
-            pre = cur;
+            pre = end;
             cur = unlock;
             cur.SetActive(true);
+
+            if(StaticVar.bonusSkin<6){
+                StaticVar.bonus++;
+            bonusSkinImg.sprite = shopCtl.skinSprite[StaticVar.bonusSkin];
+            unlockText.text=(StaticVar.bonus/4f*100).ToString()+"%";
+            unlockImg.fillAmount = StaticVar.bonus/4f;
+            if(StaticVar.bonus ==4){
+                bonusSkin();
+            }
+            }
+            
+
+
             morePrize.enabled = true;
             coinReward =  (50+StaticVar.map*10)*StaticVar.rate;
             StaticVar.coin += coinReward;
@@ -131,6 +153,9 @@ public class GameController : MonoBehaviour
             win.SetActive(true);
             lose.SetActive(false);
         }else{
+            cur = end;
+            cur.SetActive(true); 
+            rankText.text = rank.ToString();
              audioSource.clip = audioClips[1];
             audioSource.Play();
             lose.SetActive(true);
@@ -165,7 +190,6 @@ public class GameController : MonoBehaviour
         cur.SetActive(true);
     }
     public void chooseMap(int i){
-
         StaticVar.map=i;
         progress.SetActive(true);
         for(int j=0;j<4;j++){
@@ -175,6 +199,7 @@ public class GameController : MonoBehaviour
                 progressMap[j].SetActive(true);
         }
         SaveData.save();  
+         
         {
             StartCoroutine(LoadAsynchronously(1));
         }
@@ -192,9 +217,9 @@ public class GameController : MonoBehaviour
             }
             loadingPic.SetActive(false);
         }
-        cur.SetActive(false);
-        cur = menu;
-        cur.SetActive(true);
+        //cur.SetActive(false);
+        //cur = menu;
+        //cur.SetActive(true);
         //pre=cur;
     }
     public void startGame(){
@@ -232,6 +257,7 @@ public class GameController : MonoBehaviour
             pre=null;
 
         }
+        chooseMap(StaticVar.map);
     }
     public void pauseGame(){
         cur = pause;
@@ -321,7 +347,52 @@ public class GameController : MonoBehaviour
         }
     }
     public void changeSkin(int skinNum){
-        StaticVar.skinBrick = skinNum;
-        chooseMap(StaticVar.map);
+        if(StaticVar.skinUnlocked[skinNum]>1){
+            StaticVar.skinBrick = skinNum;
+            shopCtl.updateShop();
+             SaveData.save();  
+
+        }else{
+            if(StaticVar.skinUnlocked[skinNum]==1){
+                if(StaticVar.coin >= StaticVar.skinCost[skinNum]){
+                    
+                    StaticVar.coin -= StaticVar.skinCost[skinNum];
+                    StaticVar.skinUnlocked[skinNum]+=2;
+                    StaticVar.skinBrick = skinNum;
+                    shopCtl.updateShop();
+                    SaveData.save();  
+                }
+            }else{
+                // play ads
+                StaticVar.skinBrick = skinNum;
+                shopCtl.updateShop();
+                 SaveData.save();  
+            }
+        }
+         SaveData.load();  
+    }
+    public void bonusSkin(){
+        StaticVar.bonus =0;
+        StaticVar.skinUnlocked[StaticVar.bonusSkin]+=2;
+        SaveData.save();
+        SaveData.load();
+    }
+    public void resetSave(){
+        SaveData.resetSave();
+        updateLoad();
+    }
+    public void updateLoad(){
+        if(SaveData.load() == null)
+            chooseMap(StaticVar.map);
+        else {
+            Data savedata = SaveData.load();
+            chooseMap(savedata.map);
+            SaveData.save();
+        }
+        coin.text = StaticVar.coin.ToString();
+        lv1.text="Lvl "+(StaticVar.upgrade1+1).ToString();
+        lv2.text="Lvl "+(StaticVar.upgrade2+1).ToString();
+        cost1.text=((StaticVar.upgrade1+1)*1000).ToString();
+        cost2.text=((StaticVar.upgrade2+1)*1000).ToString();
     }
 }

@@ -11,7 +11,9 @@ public class enemy : player
         mapYPos=this.transform.position.y;
         oldspeed=speed;
     }
-    
+    private void Awake() {
+        
+    }
     
     public override void dead(){
         Destroy(this.gameObject); 
