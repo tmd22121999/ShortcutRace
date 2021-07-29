@@ -27,6 +27,9 @@ public class genMap : MonoBehaviour
      public string Notes = "a và b là max khoảng cách giữa 2 bonus";
     public float a;
     public float b;
+    [Header ("water")]
+        public MeshRenderer waterMeshRenderer;
+        public Color[] waterColor = {new Color(0f, 0f, 0f, 255f), new Color(150f, 150f, 255f, 255f), new Color(110f, 110f, 110f, 255f) };
     void Awake()
     {
         //map = GameObject.FindWithTag("ground").GetComponent<PathCreator>();
@@ -72,11 +75,11 @@ public class genMap : MonoBehaviour
     }
 
     public void genEnemy(){
-        float [][] random = {new float[]{0,0,0},new float[]{1f,0.3f,0},new float[]{0.2f,0.9f,0.4f},new float[]{0.9f,0.5f,0.5f},new float[]{0.5f,0.2f,1}};
+        float [][] random = {new float[]{0,0,0},new float[]{0.8f,0.3f,0},new float[]{0.2f,0.9f,0.4f},new float[]{0.6f,0.5f,0.5f},new float[]{0.5f,0.2f,1}};
         GameObject[] chrOjTmp = new GameObject[5];
         Vector3 instantPos;
         for(int i=0 ; i<5 ; i++){
-            instantPos = map.path.GetPoint(0) + new Vector3(4*(i%2*2-1)-1,0,(i*2+0.2f)*6+25);
+            instantPos = map.path.GetPoint(0)+new Vector3(0,0,30) + new Vector3(4*(i%2*2-1)-1,0,(i*2+0.2f)*6+25);
             chrOjTmp[i] = Instantiate (character , instantPos , Quaternion.Euler(new Vector3(0, 0, 0)) , characterTransform);
             chrOjTmp[i].GetComponent<enemyAI>().prority=random[i];
             string[] names = new string[] { "Peter", "Ron", "Satchmo","sachou","tencho","sakura","johnathan","magot", "someone1", "pro gamer", "talon", "nguyen van C", "abcsdf"};

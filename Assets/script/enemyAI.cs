@@ -25,6 +25,7 @@ public class enemyAI : MonoBehaviour
     public PathCreator map;
     public Animator ani;
     private NavMeshAgent nav;
+    private float randx;
     int i;
     //private bool tmp = false;
     private void Awake() {
@@ -33,6 +34,8 @@ public class enemyAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
+         randx = Random.Range(-5,5);
         thisbody=this.GetComponent<enemy>();
         goal=GameObject.FindWithTag("goal").transform;
         nav = GetComponent<NavMeshAgent>();
@@ -45,7 +48,7 @@ public class enemyAI : MonoBehaviour
     
     void FixedUpdate()
     {
-        
+        if(!thisbody.passGoal){
         if((thisbody.isHit) && (state!=State.isHit) && (state!=State.killing)){
             lastState = state;
             state=State.isHit;
@@ -94,6 +97,7 @@ public class enemyAI : MonoBehaviour
                     return;
                 float distance = Vector3.Distance(thisbody.transform.position,giaodiem);
                     if( (distance < posibleLeng+3) && (distance > 6)){
+                        
                         destination = giaodiem;
                         return;
                     }
@@ -114,17 +118,21 @@ public class enemyAI : MonoBehaviour
             }
             if(Vector3.Distance(transform.position,goal.transform.position) >30){
                 float dis = map.path.GetClosestDistanceAlongPath(thisbody.transform.position);
-                destination =  map.path.GetPointAtDistance(dis + 20);
+                destination =  map.path.GetPointAtDistance(dis + 20)+new Vector3(randx,0,randx+5);
 
             }else{
                 destination = goal.transform.position;
             }
         }
-
+        }else{
+            ani.SetBool("isHit",false);
+                ani.SetBool("isKilling",false);
+                ani.SetBool("isrunning",false);
+        }
     }
     public void running(){
         
-        Debug.DrawLine(thisbody.transform.position, destination);
+        //Debug.DrawLine(thisbody.transform.position, destination);
         thisbody.transform.position+=thisbody.transform.forward * thisbody.speed * Time.fixedDeltaTime;
         GoToNextPoint();
         

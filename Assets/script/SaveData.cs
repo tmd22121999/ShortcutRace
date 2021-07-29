@@ -47,7 +47,9 @@ public static class SaveData
         for(int i=0;i<StaticVar.skinUnlocked.Length;i++){
             if(StaticVar.skinUnlocked[i]<2){
                 StaticVar.bonusSkin = i;
+                break;
             }
+            StaticVar.bonusSkin = -1;
         }
     }
     public static void resetSave(){

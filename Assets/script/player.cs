@@ -12,7 +12,9 @@ public class player : MonoBehaviour
     
     [Header ("Reference")]
     public fov2 fov;
-    public GameObject brick,dat,gach;
+    public GameObject brick,dat,gach,pickup,pickupPos;
+    public Mesh[] pickupMesh;
+    public MeshFilter pickupMeshFilter;
     public TextMeshPro nameText;
     [Header ("Other")]
     public float cooldown;
@@ -31,14 +33,15 @@ public class player : MonoBehaviour
      public float oldspeed,RemainTime,mapYPos;
      public Vector3 lastBridgePos, lastPosOnGround;
      bool stillAlive = false;
-     RaycastHit hit;
+     RaycastHit hit;GameObject[] pickupInst = new GameObject[900] ;
      
   
     void Start()
         {  
         gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         dat = gameController.skinB[StaticVar.skinBrick%6];
-    
+        pickupMeshFilter = pickup.GetComponent<MeshFilter>();
+        pickupMeshFilter.mesh=pickupMesh[StaticVar.skinBrick%6];
         oldspeed=pmove.speed;
         mapYPos=this.transform.position.y ;
         // số gạch mặc định
@@ -143,16 +146,35 @@ public class player : MonoBehaviour
         //oldspeed = oldspeed+ i/5f;
         //oldspeed = Mathf.Max(oldspeed,15f);
         //oldspeed = Mathf.Min(oldspeed,maxspeed);
+        if((brickCount+i<=0) && (brickCount<2)){
+            for(int j=0;j<brickCount;j++){
+             if(pickupInst[brickCount]!=null)
+                 pickupInst[j].SetActive(false);
+            }
+        }
         brickCount+=i;
         if(brickCount<=0) {
             brickCount=0;
             brick.transform.localScale = new Vector3(0,0,0);
              fov.viewRadius=brickCount * 0.71f + 5;
              transform.localScale= new Vector3(1,1,1);
+             if(pickupInst[brickCount]!=null)
+                pickupInst[brickCount].SetActive(false);
             //Debug.Log("after"+brick.transform.position);
             return;
         }else{
-            brick.transform.localScale = new Vector3(brickCount, 1, 1f);
+            //brick.transform.localScale = new Vector3(brickCount, 1, 1f);
+            
+            if(i>0)
+                if( pickupInst[brickCount-1] ==null){
+                    pickupInst[brickCount-1] = Instantiate(pickup,pickupPos.transform);
+                    pickupInst[brickCount-1].transform.localPosition += new Vector3(0,brickCount/10f,0);
+                }else{
+                    pickupInst[brickCount-1].SetActive(true);
+                }
+            else    
+                pickupInst[brickCount].SetActive(false);
+            
             fov.viewRadius=brickCount * 0.71f + 5;
             if( (brickCount <maxScale))
                 transform.localScale += new Vector3(1,1,1)*i/40;
@@ -203,9 +225,11 @@ public class player : MonoBehaviour
     
     // bat tat vat ly chieu x z khi va cham vat can
     private void OnCollisionEnter(Collision other) {
+        
         if(other.gameObject.CompareTag("obstacle")){
              this.gameObject.GetComponent<Rigidbody>().constraints &= ~(RigidbodyConstraints.FreezePositionX|RigidbodyConstraints.FreezePositionZ);
         }else if(other.gameObject.CompareTag("other") || other.gameObject.CompareTag("Player")){
+            if(!passGoal&& !other.gameObject.GetComponent<player>().passGoal){
             if(other.gameObject.GetComponent<player>().brickCount > brickCount){   
                 if(!isHit && other.gameObject.GetComponent<player>().canKill && !isJump)
                 if(!jump.enabled){
@@ -224,6 +248,7 @@ public class player : MonoBehaviour
                   
             }
               }
+        }
     }
     public void afterhit(Vector3 pos){
         this.transform.position = pos;

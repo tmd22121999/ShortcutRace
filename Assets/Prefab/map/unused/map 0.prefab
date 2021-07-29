@@ -243,10 +243,12 @@ MonoBehaviour:
   roadWidth: 10
   thickness: 0.5
   flattenSurface: 0
-  roadMaterial: {fileID: 2100000, guid: 77fec403b97d89a4fae90fe8b23bc23c, type: 2}
+  roadMaterial: {fileID: 0}
   undersideMaterial: {fileID: 2100000, guid: 9ca80467a033e954a8b9ad8601d6f4c7, type: 2}
   textureTiling: 20
   meshHolder: {fileID: 0}
+  roadTexture: []
+  undersideTexture: []
 --- !u!1 &1099234581174012355
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,7 +260,7 @@ GameObject:
   - component: {fileID: 1099234581174012352}
   - component: {fileID: 1099234581174012353}
   m_Layer: 0
-  m_Name: map
+  m_Name: map 0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -297,14 +299,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d91450bee86a76d49af3bbfecbb1491b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: {fileID: 1099234581142201044}
+  spawnPos: []
   brick: {fileID: 7768218406778040454, guid: b64ff4b1f3ffbeb47a3a7d6a0e7b7eea, type: 3}
   startText: {fileID: 0}
+  startBrick: {fileID: 0}
   road: {fileID: 1099234581447629249}
+  map: {fileID: 1099234581142201044}
   character: {fileID: 0}
   characterTransform: {fileID: 0}
   bonusObj: {fileID: 5005619237583906578, guid: 397d31f8a1df6e647b91d21950453aeb,
     type: 3}
+  bonusTexture: []
+  bonusMesh: {fileID: 0}
   bonusTransform: {fileID: 1099234581867560982}
   goal: {fileID: 1099234582296049853}
   Notes: "a v\xE0 b l\xE0 max kho\u1EA3ng c\xE1ch gi\u1EEFa 2 bonus"
@@ -328,7 +334,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 3
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1099234581249456257
 Transform:
   m_ObjectHideFlags: 0
@@ -847,8 +853,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rank: 0
-  gameController: {fileID: 0}
+  rankNow: 0
+  bonus: {fileID: 0}
   another: []
+  player: {fileID: 0}
+  rankText: {fileID: 0}
 --- !u!1 &1099234582443473249
 GameObject:
   m_ObjectHideFlags: 0

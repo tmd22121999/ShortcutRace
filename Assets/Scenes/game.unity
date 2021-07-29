@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 427d357e31e61dc47815a5e6175c4354, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1495338169}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.974256, g: 0.70185107, b: 0.57017463, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -217,10 +217,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapPrefab:
-  - {fileID: 8087230589676639215, guid: 4cb6b29e7c44df543af6b0e54173f469, type: 3}
-  - {fileID: 1099234581174012355, guid: 37de2fa3dac68a942b220f336ed6868d, type: 3}
-  - {fileID: 2867234210960113442, guid: 2b96252bb2381d24ab37d3c97b72f9c0, type: 3}
-  - {fileID: 2867234210960113442, guid: 7fd2acf0d2e5e7c4190bd1eff0112c99, type: 3}
+  - {fileID: 8087230589676639215, guid: d75007afdff24a547be22f4be638a333, type: 3}
+  - {fileID: 1099234581174012355, guid: 0ccbaa423e1e8a94299f4fde53cc8858, type: 3}
+  - {fileID: 2867234210960113442, guid: baa1c9eed636f5148a1ff8fe8b7fc4df, type: 3}
+  - {fileID: 2867234210960113442, guid: beb697c26e0f71748aa3ea5f3f822561, type: 3}
 --- !u!4 &1429169305
 Transform:
   m_ObjectHideFlags: 0

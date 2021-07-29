@@ -14,6 +14,8 @@ public class GameController : MonoBehaviour
     public GameObject map;
     public GameObject menu, cur, pre, setting, shop,progress;
     public GameObject[] progressMap;
+    public Image mapcurImg,nextmapImg;
+    public Sprite[] mapSpriteList;
     public Text coin;
     public int State; 
     [Header ("End game UI")]
@@ -45,6 +47,8 @@ public class GameController : MonoBehaviour
     public GameObject startImg,pause,loadingPic;
     public AudioSource audioSource;
      public AudioClip[] audioClips;
+     public Material bgMaterial;
+     public Texture[] backgroundTexture;
      [Header ("upgrade, shop, coin")]
      public Text lv1;
      public Text lv2, cost1, cost2, coinRewardText;
@@ -126,18 +130,22 @@ public class GameController : MonoBehaviour
             cur.SetActive(false); 
         
         if(rank == 1){
-            pre = end;
-            cur = unlock;
-            cur.SetActive(true);
+            
+            if(StaticVar.bonusSkin>=0){
+                pre = end;
+                cur = unlock;
+                cur.SetActive(true);
 
-            if(StaticVar.bonusSkin<6){
                 StaticVar.bonus++;
-            bonusSkinImg.sprite = shopCtl.skinSprite[StaticVar.bonusSkin];
-            unlockText.text=(StaticVar.bonus/4f*100).ToString()+"%";
-            unlockImg.fillAmount = StaticVar.bonus/4f;
-            if(StaticVar.bonus ==4){
-                bonusSkin();
-            }
+                bonusSkinImg.sprite = shopCtl.skinSprite[StaticVar.bonusSkin];
+                unlockText.text=(StaticVar.bonus/4f*100).ToString()+"%";
+                unlockImg.fillAmount = StaticVar.bonus/4f;
+                if(StaticVar.bonus ==4){
+                    bonusSkin();
+                }
+            }else{
+                cur = end;
+                cur.SetActive(true);
             }
             
 
@@ -192,6 +200,12 @@ public class GameController : MonoBehaviour
     public void chooseMap(int i){
         StaticVar.map=i;
         progress.SetActive(true);
+        int textureIndex = (StaticVar.map-1) - (StaticVar.map-1)%4;
+                textureIndex = textureIndex/4;
+        mapcurImg.sprite = mapSpriteList[textureIndex%3];
+        nextmapImg.sprite = mapSpriteList[(textureIndex+1)%3];
+        RenderSettings.skybox = bgMaterial;
+        RenderSettings.skybox.mainTexture = backgroundTexture[textureIndex%3];
         for(int j=0;j<4;j++){
             if( j < (StaticVar.map+3) % 4)
                 progressMap[j].SetActive(false);

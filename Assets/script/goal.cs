@@ -25,13 +25,20 @@ public class goal : MonoBehaviour
         //Debug.Log(another.Length);
             if(another[r] != null)
             if( Vector3.Distance(transform.position, player.transform.position) > Vector3.Distance(transform.position, another[r].transform.position)) {
-                rankNow++;
-                
-            
+                if(!another[r].GetComponent<player>().passGoal)
+                    rankNow++;
             }
            // Debug.Log(another[r]);
         }
         rankText.text = rankNow.ToString();
+        if(rankNow==1)
+            rankText.text+=" st";
+        else if(rankNow==2)
+            rankText.text+=" nd";
+        else if(rankNow==3)
+            rankText.text+=" rd";
+        else
+            rankText.text+=" th";
         //Debug.Log(rankNow);
     }
        void OnTriggerEnter(Collider other)
@@ -50,10 +57,19 @@ public class goal : MonoBehaviour
                 other.gameObject.GetComponent<player>().dead();
             
             
-        }else if(other.gameObject.CompareTag("other") ){
+        }else if(other.gameObject.CompareTag("other")  && !(other.gameObject.GetComponent<player>().passGoal)){
             other.gameObject.GetComponent<player>().passGoal=true;
+            other.gameObject.GetComponent<player>().changeBrick(-other.gameObject.GetComponent<player>().brickCount);
+            
+             other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+            Debug.Log(other.name);
             rank++;
-            Destroy(other.gameObject);
+            if(rank==1 )
+                other.gameObject.GetComponent<enemyAI>().ani.SetInteger("end",1);
+            else if(rank>3)
+                Destroy(other.gameObject);
+            else
+                other.gameObject.GetComponent<enemyAI>().ani.SetInteger("end",-1);
         }
     }
 

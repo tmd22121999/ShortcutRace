@@ -78,6 +78,7 @@ Transform:
   - {fileID: 7409459886084576716}
   - {fileID: 7207035486926974643}
   - {fileID: 3129592687548738941}
+  - {fileID: 3957209998180017831}
   m_Father: {fileID: 7207035486554735312}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -385,6 +386,36 @@ MonoBehaviour:
   _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
+--- !u!1 &4651775362449893660
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3957209998180017831}
+  m_Layer: 9
+  m_Name: pikup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3957209998180017831
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4651775362449893660}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 1.9000001, z: 2.35}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2822094097213836398}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!64 &6475295287466717990
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -672,12 +703,22 @@ MonoBehaviour:
   brick: {fileID: 5509927209066884391}
   dat: {fileID: 53677339194358061, guid: 6b7c71444d8fa9f479a0612cff531969, type: 3}
   gach: {fileID: 8337748071275967104, guid: 73b84b8e179924d4cb2f478c14906ad5, type: 3}
+  pickup: {fileID: 4606728670641097474, guid: 48208a42755692b498e7cc3ba845aff4, type: 3}
+  pickupPos: {fileID: 4651775362449893660}
+  pickupMesh:
+  - {fileID: -5152543842198734490, guid: 048a7835b90cf8f4a9177dfbea9f1d54, type: 3}
+  - {fileID: -5152543842198734490, guid: c1169317c067ba941ae9161915852fd3, type: 3}
+  - {fileID: 2663963717054825428, guid: b7ef1b821b2583649ac1d45b54b9f026, type: 3}
+  - {fileID: 3925746490582070035, guid: bb4d878e70274084db2d71c81707896c, type: 3}
+  - {fileID: 1500431761539964880, guid: 048a7835b90cf8f4a9177dfbea9f1d54, type: 3}
+  - {fileID: -5883365910267641690, guid: 2fe875a1efaa5404086c5f7bae8949cd, type: 3}
+  pickupMeshFilter: {fileID: 0}
   nameText: {fileID: 2079820190907855726}
   cooldown: 3
   stickPos: {x: 0, y: 0, z: 0}
   gameController: {fileID: 0}
   pmove: {fileID: 1902883920}
-  maxspeed: 30
+  maxspeed: 40
   timeGetHit: 1.02
   jump: {fileID: 7034102715131357853}
   allSfx:
@@ -719,7 +760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a37d705c8e9115e439ec799186182634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 15
+  speed: 25
   FloatingJoystick: {fileID: 0}
   rb: {fileID: 7207035486554735322}
   thisplayer: {fileID: 7207035486554735323}
